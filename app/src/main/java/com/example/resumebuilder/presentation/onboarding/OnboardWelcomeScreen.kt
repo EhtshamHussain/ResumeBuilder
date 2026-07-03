@@ -1,0 +1,141 @@
+package com.example.resumebuilder.presentation.onboarding
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Assignment
+import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.Work
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.resumebuilder.screens.CustomButton
+import com.example.resumebuilder.presentation.onboarding.components.FeatureCard
+import com.example.resumebuilder.presentation.onboarding.components.FloatingIllustration
+import com.example.resumebuilder.presentation.onboarding.components.OnboardingDescription
+import com.example.resumebuilder.presentation.onboarding.components.OnboardingTitle
+
+
+@Preview()
+@Composable
+fun OnboardWelcomeScreen(
+    onNextClick: () -> Unit = {},
+    onSkipClick: () -> Unit = {}
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+            .padding(bottom = 30.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(modifier = Modifier.weight(0.5f))
+
+        // Animated Illustration Placeholder
+        FloatingIllustration(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(250.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(200.dp)
+                    .clip(CircleShape)
+                    .background(Color(0xFFE8F0F7)),
+                contentAlignment = Alignment.Center
+            ) {
+                // Resume Card Placeholder
+                Box(
+                    modifier = Modifier
+                        .size(140.dp, 160.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(Color.White)
+                        .padding(12.dp)
+                ) {
+                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.AutoMirrored.Filled.Assignment, null, tint = Color(0xFF005EA4))
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Box(modifier = Modifier.height(4.dp).weight(1f).background(Color(0xFFE0E0E0)))
+                        }
+                        repeat(3) {
+                            Box(modifier = Modifier.height(4.dp).fillMaxWidth().background(Color(0xFFF0F0F0)))
+                        }
+                        Icon(Icons.Default.AutoAwesome, null, tint = Color(0xFF005EA4), modifier = Modifier.align(Alignment.End))
+                    }
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(40.dp))
+
+        OnboardingTitle(
+            text = "Generate resumes using AI.",
+            highlightPart = "using AI."
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OnboardingDescription(
+            text = "Turn your career history into a high-impact document in seconds. Smart keyword matching ensures you bypass automated filters."
+        )
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            FeatureCard(
+                icon = Icons.Default.AutoAwesome,
+                title = "Instant Drafts",
+                description = "Done in bits.",
+                modifier = Modifier.weight(1f)
+            )
+            FeatureCard(
+                icon = Icons.Default.Work,
+                title = "Role Targeted",
+                description = "Matches job specs.",
+                modifier = Modifier.weight(1f)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(40.dp))
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = "Skip",
+                fontSize = 16.sp,
+                color = Color.Gray,
+                modifier = Modifier.clickable { onSkipClick() }
+            )
+
+            CustomButton(
+                text = "Next",
+                isWithIcon = true,
+                containerColor = Color(0xFF005EA4),
+                contentColor = Color.White,
+                onClick = onNextClick,
+                modifier = Modifier.width(140.dp)
+            )
+        }
+    }
+}

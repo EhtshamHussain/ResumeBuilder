@@ -86,5 +86,7 @@ dependencies {
 
 
 
+    implementation("com.google.code.gson:gson:2.14.0")
+    implementation("com.github.spullara.mustache.java:compiler:0.9.14")
 
 }

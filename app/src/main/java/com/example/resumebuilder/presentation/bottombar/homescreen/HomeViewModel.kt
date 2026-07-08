@@ -1,0 +1,92 @@
+package com.example.resumebuilder.presentation.bottombar.homescreen
+
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.viewModelScope
+import com.example.resumebuilder.domain.repository.ResumeRepository
+import com.example.resumebuilder.presentation.navigation.Routes
+import com.example.resumebuilder.presentation.shared.extension.vmScopeMain
+import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
+import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+
+class HomeViewModel(
+    private val resumeRepository: ResumeRepository
+) : BaseViewModel() {
+
+    var state by mutableStateOf(HomeState())
+        private set
+
+    fun onEvent(event: HomeEvent) {
+        when (event) {
+            is HomeEvent.SettingsClicked -> {
+                navigate(NavigationAction.NavigateTo(Routes.Settings))
+            }
+
+            is HomeEvent.AddResumeClicked -> {
+                navigate(NavigationAction.NavigateTo(Routes.CreateResume))
+            }
+
+            is HomeEvent.DeleteIconClicked -> {
+                state = state.copy(resumeIdPendingDelete = event.resumeId)
+            }
+
+            is HomeEvent.DeleteCancelled -> {
+                state = state.copy(resumeIdPendingDelete = null)
+            }
+
+            is HomeEvent.DeleteConfirmed -> {
+                deleteResume()
+            }
+
+            is HomeEvent.ScreenEntered -> {
+                observeResumes()
+            }
+
+            is HomeEvent.ResumeClicked -> {
+                navigate(NavigationAction.NavigateTo(Routes.ResumePreview(resumeId = event.resumeId)))
+            }
+        }
+    }
+
+    // Flow ko observe karte hain — jab bhi Room mein naya resume add ho, list automatically update hogi
+    // (isliye "loadResumes" ki jagah ab "observeResumes" — one-time fetch nahi, continuous observation hai)
+    private fun observeResumes() {
+        state = state.copy(isLoading = true)
+
+        resumeRepository.getAllResumes()
+            .onEach { resumes ->
+                state = state.copy(isLoading = false, resumes = resumes)
+            }
+            .launchIn(viewModelScope)
+    }
+
+    private fun deleteResume() {
+        val resumeId = state.resumeIdPendingDelete ?: return
+
+        viewModelScope.launch {
+            resumeRepository.deleteResume(resumeId)
+                .onSuccess {
+                    // Dialog band karo — list Flow se automatically update ho jayegi
+                    // (observeResumes() ka Flow observer khud naya data emit karega)
+                    state = state.copy(resumeIdPendingDelete = null)
+                    showToast("Resume deleted")
+                }
+                .onFailure { error ->
+                    state = state.copy(
+                        resumeIdPendingDelete = null,
+                        error = error.message ?: "Failed to delete resume"
+                    )
+                }
+        }
+    }
+}
+/**
+Kyun launchIn(viewModelScope), viewModelScope.launch { } nahi?
+Kyunki ye ek continuous stream hai (Flow), jo hamesha chalta rehta hai jab tak ViewModel zinda hai
+— har naye resume insert pa naya emission aata hai.
+launchIn isko automatically viewModelScope ke sath collect karta hai aur ViewModel clear hone pa khud cancel ho jata hai.
+ ***/

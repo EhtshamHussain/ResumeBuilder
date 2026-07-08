@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        /* Modern template ka design goal: dark sidebar (contact/skills) + light main content column.
+           Ye tech/creative roles ke liye hai isliye thoda bold aur colorful hai. */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #2b2b2b;
+            font-size: 13px;
+        }
+
+        /* Poora resume ek Row jaisa layout hai — CSS table use kiya kyunki
+           PDF-render engines (jo iss HTML ko PDF banayenge) flexbox ko hamesha
+           reliably support nahi karte, lekin table-based layout hamesha kaam karta hai */
+        .container {
+            display: table;
+            width: 100%;
+        }
+
+        .sidebar {
+            display: table-cell;
+            width: 32%;
+            background-color: #1B2A41;
+            color: #ffffff;
+            padding: 24px 18px;
+            vertical-align: top;
+        }
+
+        .main-content {
+            display: table-cell;
+            width: 68%;
+            padding: 24px 20px;
+            vertical-align: top;
+            background-color: #ffffff;
+        }
+
+        /* ---- Sidebar Styles ---- */
+        .sidebar-name {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 0 0 4px 0;
+            color: #ffffff;
+        }
+
+        .sidebar-title {
+            font-size: 13px;
+            color: #8FB4D9;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #8FB4D9;
+            border-bottom: 1px solid #3A4E68;
+            padding-bottom: 4px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-contact-item {
+            font-size: 12px;
+            margin-bottom: 6px;
+            color: #E0E6ED;
+            word-break: break-all;
+        }
+
+        .sidebar-skill-chip {
+            display: inline-block;
+            background-color: #2E4258;
+            color: #ffffff;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            margin: 3px 3px 3px 0;
+        }
+
+        .sidebar-simple-item {
+            font-size: 12px;
+            margin-bottom: 4px;
+            color: #E0E6ED;
+        }
+
+        /* ---- Main Content Styles ---- */
+        .main-section-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #1B2A41;
+            border-left: 4px solid #4A90D9;
+            padding-left: 8px;
+            margin-top: 22px;
+            margin-bottom: 12px;
+        }
+
+        .main-section-title:first-child {
+            margin-top: 0;
+        }
+
+        .summary-text {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #444444;
+        }
+
+        .entry {
+            margin-bottom: 14px;
+        }
+
+        .entry-header {
+            display: table;
+            width: 100%;
+        }
+
+        .entry-role {
+            display: table-cell;
+            font-weight: bold;
+            font-size: 14px;
+            color: #1B2A41;
+        }
+
+        .entry-date {
+            display: table-cell;
+            text-align: right;
+            font-size: 11px;
+            color: #999999;
+            white-space: nowrap;
+        }
+
+        .entry-company {
+            font-size: 12.5px;
+            color: #4A90D9;
+            font-style: italic;
+            margin-bottom: 4px;
+        }
+
+        .entry-description {
+            font-size: 12.5px;
+            color: #555555;
+            line-height: 1.5;
+        }
+
+        .project-link {
+            font-size: 11px;
+            color: #4A90D9;
+        }
+
+        a {
+            color: #4A90D9;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ===== SIDEBAR: Contact, Skills, Languages, Interests ===== -->
+    <div class="sidebar">
+        <p class="sidebar-name">{{fullName}}</p>
+        <p class="sidebar-title">{{professionalTitle}}</p>
+
+        <div class="sidebar-section-title">Contact</div>
+        <p class="sidebar-contact-item">{{email}}</p>
+        <p class="sidebar-contact-item">{{phoneNumber}}</p>
+        <p class="sidebar-contact-item">{{currentLocation}}</p>
+        {{#hasLinkedIn}}<p class="sidebar-contact-item"><a href="{{linkedInUrl}}" style="color:#8FB4D9;">LinkedIn</a></p>{{/hasLinkedIn}}
+        {{#hasGithub}}<p class="sidebar-contact-item"><a href="{{githubUrl}}" style="color:#8FB4D9;">GitHub</a></p>{{/hasGithub}}
+        {{#hasPortfolio}}<p class="sidebar-contact-item"><a href="{{portfolioUrl}}" style="color:#8FB4D9;">Portfolio</a></p>{{/hasPortfolio}}
+
+        <div class="sidebar-section-title">Skills</div>
+        {{#skills}}<span class="sidebar-skill-chip">{{value}}</span>{{/skills}}
+
+        {{#hasLanguages}}
+        <div class="sidebar-section-title">Languages</div>
+        {{#languages}}<p class="sidebar-simple-item">{{value}}</p>{{/languages}}
+        {{/hasLanguages}}
+
+        {{#hasInterests}}
+        <div class="sidebar-section-title">Interests</div>
+        {{#interests}}<p class="sidebar-simple-item">{{value}}</p>{{/interests}}
+        {{/hasInterests}}
+    </div>
+
+    <!-- ===== MAIN CONTENT: Summary, Experience, Education, Projects, Certs ===== -->
+    <div class="main-content">
+
+        <div class="main-section-title">Professional Summary</div>
+        <p class="summary-text">{{professionalSummary}}</p>
+
+        <div class="main-section-title">Experience</div>
+        {{#workExperiences}}
+        <div class="entry">
+            <div class="entry-header">
+                <span class="entry-role">{{role}}</span>
+                <span class="entry-date">{{startDate}} - {{endDate}}</span>
+            </div>
+            <div class="entry-company">{{company}}</div>
+            <div class="entry-description">{{responsibilities}}</div>
+        </div>
+        {{/workExperiences}}
+
+        <div class="main-section-title">Education</div>
+        {{#educations}}
+        <div class="entry">
+            <div class="entry-header">
+                <span class="entry-role">{{degree}}</span>
+                <span class="entry-date">{{startDate}} - {{graduationDate}}</span>
+            </div>
+            <div class="entry-company">{{institution}}</div>
+        </div>
+        {{/educations}}
+
+        {{#hasProjects}}
+        <div class="main-section-title">Projects</div>
+        {{#projects}}
+        <div class="entry">
+            <div class="entry-role">{{title}}</div>
+            <div class="entry-description">{{description}}</div>
+            {{#link}}<div class="project-link"><a href="{{link}}">{{link}}</a></div>{{/link}}
+        </div>
+        {{/projects}}
+        {{/hasProjects}}
+
+        {{#hasCertifications}}
+        <div class="main-section-title">Certifications</div>
+        {{#certifications}}
+        <div class="entry">
+            <div class="entry-header">
+                <span class="entry-role">{{name}}</span>
+                <span class="entry-date">{{issuedDate}}</span>
+            </div>
+            <div class="entry-company">{{issuer}}</div>
+        </div>
+        {{/certifications}}
+        {{/hasCertifications}}
+
+        {{#hasAchievements}}
+        <div class="main-section-title">Achievements</div>
+        <ul style="font-size:12.5px; color:#555555; padding-left:18px; margin:0;">
+            {{#achievements}}<li>{{value}}</li>{{/achievements}}
+        </ul>
+        {{/hasAchievements}}
+
+        {{#includeReferences}}
+        <div class="main-section-title">References</div>
+        <p class="summary-text">Available upon request</p>
+        {{/includeReferences}}
+
+    </div>
+</div>
+
+</body>
+</html>

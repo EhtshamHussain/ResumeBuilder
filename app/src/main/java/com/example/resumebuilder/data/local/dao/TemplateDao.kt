@@ -1,18 +1,19 @@
 package com.example.resumebuilder.data.local.dao
 
+
+
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.resumebuilder.data.local.entity.TemplateEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TemplateDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(template: TemplateEntity)
+    suspend fun insertAll(templates: List<TemplateEntity>)
 
     @Query("SELECT * FROM templates")
-    fun getTemplates(): Flow<List<TemplateEntity>>
+    suspend fun getAllTemplates(): List<TemplateEntity>
 }

@@ -8,6 +8,7 @@
     import androidx.lifecycle.viewModelScope
     import com.example.resumebuilder.data.local.preference.SessionManager
     import com.example.resumebuilder.domain.repository.AuthRepository
+    import com.example.resumebuilder.presentation.bottombar.screens.BottomBarScreens
     import com.example.resumebuilder.presentation.navigation.Routes
     import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
     import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewModel
@@ -55,16 +56,16 @@
                     email = state.email,
                     password = state.password
                 ).onSuccess { user ->
-
+                    sessionManager.setLoggedIn(name = user.name , user.email)
                     Result.success(user)
                     state= state.copy( isLoading = false)
                     navigate(
                         NavigationAction.NavigateTo(
-                            route = Routes.Home,
+                            route = BottomBarScreens.Home,
                             clearBackStack = true
                         )
                     )
-                    sessionManager.setLoggedIn()
+
                 }.onFailure { error ->
                    state= state.copy(isLoading = false, error = error.message ?: "Signup failed")
                 }

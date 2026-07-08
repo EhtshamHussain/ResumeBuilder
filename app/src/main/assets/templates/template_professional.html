@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        /* Professional template ka design goal: classic corporate look —
+           serif font, centered header, thin horizontal rules. Executive/corporate roles ke liye. */
+
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            color: #222222;
+            margin: 0;
+            padding: 32px 36px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 6px;
+        }
+
+        .name {
+            font-size: 28px;
+            font-weight: normal;
+            letter-spacing: 1px;
+            margin: 0;
+            color: #1a1a1a;
+        }
+
+        .title {
+            font-size: 15px;
+            color: #555555;
+            margin: 6px 0;
+            font-style: italic;
+        }
+
+        .contact-line {
+            font-size: 11.5px;
+            color: #444444;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid #999999;
+            margin: 16px 0;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #1a1a1a;
+            margin-top: 20px;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .summary-text {
+            text-align: justify;
+            font-size: 13px;
+        }
+
+        .entry {
+            margin-bottom: 12px;
+        }
+
+        .entry-header {
+            display: table;
+            width: 100%;
+        }
+
+        .entry-role {
+            display: table-cell;
+            font-weight: bold;
+            font-size: 13.5px;
+        }
+
+        .entry-date {
+            display: table-cell;
+            text-align: right;
+            font-size: 12px;
+            color: #666666;
+            white-space: nowrap;
+        }
+
+        .entry-company {
+            font-size: 12.5px;
+            font-style: italic;
+            color: #444444;
+            margin-bottom: 4px;
+        }
+
+        .entry-description {
+            font-size: 12.5px;
+            color: #333333;
+            text-align: justify;
+        }
+
+        .center-list {
+            text-align: center;
+            font-size: 12.5px;
+        }
+
+        .center-list-item {
+            display: inline-block;
+            margin: 0 8px;
+        }
+
+        .center-list-item:not(:last-child):after {
+            content: "•";
+            margin-left: 16px;
+            color: #999999;
+        }
+
+        a {
+            color: #1a1a1a;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+    <p class="name">{{fullName}}</p>
+    <p class="title">{{professionalTitle}}</p>
+    <p class="contact-line">
+        {{email}} &nbsp;|&nbsp; {{phoneNumber}} &nbsp;|&nbsp; {{currentLocation}}
+    </p>
+    <p class="contact-line">
+        {{#hasLinkedIn}}<a href="{{linkedInUrl}}">LinkedIn</a>{{/hasLinkedIn}}
+        {{#hasGithub}} &nbsp;|&nbsp; <a href="{{githubUrl}}">GitHub</a>{{/hasGithub}}
+        {{#hasPortfolio}} &nbsp;|&nbsp; <a href="{{portfolioUrl}}">Portfolio</a>{{/hasPortfolio}}
+    </p>
+</div>
+
+<hr class="divider">
+
+<!-- ===== SUMMARY ===== -->
+<div class="section-title">Professional Summary</div>
+<p class="summary-text">{{professionalSummary}}</p>
+
+<hr class="divider">
+
+<!-- ===== EXPERIENCE ===== -->
+<div class="section-title">Professional Experience</div>
+{{#workExperiences}}
+<div class="entry">
+    <div class="entry-header">
+        <span class="entry-role">{{role}}</span>
+        <span class="entry-date">{{startDate}} – {{endDate}}</span>
+    </div>
+    <div class="entry-company">{{company}}</div>
+    <div class="entry-description">{{responsibilities}}</div>
+</div>
+{{/workExperiences}}
+
+<hr class="divider">
+
+<!-- ===== EDUCATION ===== -->
+<div class="section-title">Education</div>
+{{#educations}}
+<div class="entry">
+    <div class="entry-header">
+        <span class="entry-role">{{degree}}</span>
+        <span class="entry-date">{{startDate}} – {{graduationDate}}</span>
+    </div>
+    <div class="entry-company">{{institution}}</div>
+</div>
+{{/educations}}
+
+<hr class="divider">
+
+<!-- ===== SKILLS ===== -->
+<div class="section-title">Core Competencies</div>
+<div class="center-list">
+    {{#skills}}<span class="center-list-item">{{value}}</span>{{/skills}}
+</div>
+
+{{#hasProjects}}
+<hr class="divider">
+<div class="section-title">Projects</div>
+{{#projects}}
+<div class="entry">
+    <div class="entry-role">{{title}}</div>
+    <div class="entry-description">{{description}}</div>
+    {{#link}}<div class="entry-company"><a href="{{link}}">{{link}}</a></div>{{/link}}
+</div>
+{{/projects}}
+{{/hasProjects}}
+
+{{#hasCertifications}}
+<hr class="divider">
+<div class="section-title">Certifications</div>
+{{#certifications}}
+<div class="entry">
+    <div class="entry-header">
+        <span class="entry-role">{{name}}</span>
+        <span class="entry-date">{{issuedDate}}</span>
+    </div>
+    <div class="entry-company">{{issuer}}</div>
+</div>
+{{/certifications}}
+{{/hasCertifications}}
+
+{{#hasLanguages}}
+<hr class="divider">
+<div class="section-title">Languages</div>
+<div class="center-list">
+    {{#languages}}<span class="center-list-item">{{value}}</span>{{/languages}}
+</div>
+{{/hasLanguages}}
+
+{{#hasAchievements}}
+<hr class="divider">
+<div class="section-title">Achievements</div>
+<ul style="font-size:12.5px; padding-left:24px;">
+    {{#achievements}}<li>{{value}}</li>{{/achievements}}
+</ul>
+{{/hasAchievements}}
+
+{{#includeReferences}}
+<hr class="divider">
+<div class="section-title">References</div>
+<p class="summary-text" style="text-align:center;">Available upon request</p>
+{{/includeReferences}}
+
+</body>
+</html>

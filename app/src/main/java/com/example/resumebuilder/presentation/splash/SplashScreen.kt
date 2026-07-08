@@ -1,4 +1,4 @@
-package com.example.resumebuilder.presentation.splash
+    package com.example.resumebuilder.presentation.splash
 
 
 import androidx.compose.animation.core.Animatable

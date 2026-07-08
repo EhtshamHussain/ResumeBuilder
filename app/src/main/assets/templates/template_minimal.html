@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        /* Minimal template ka design goal: bahut zyada whitespace, koi borders/backgrounds nahi,
+           sirf light gray dividers, thin font weight. "Distraction-free" look. */
+
+        body {
+            font-family: 'Segoe UI', -apple-system, Arial, sans-serif;
+            color: #333333;
+            margin: 0;
+            padding: 40px;
+            font-size: 13px;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .name {
+            font-size: 30px;
+            font-weight: 200;
+            margin: 0;
+            color: #111111;
+            letter-spacing: 0.5px;
+        }
+
+        .title {
+            font-size: 14px;
+            color: #888888;
+            margin: 6px 0 14px 0;
+            font-weight: 400;
+        }
+
+        .contact-line {
+            font-size: 11.5px;
+            color: #999999;
+            margin-bottom: 24px;
+        }
+
+        .contact-line a {
+            color: #999999;
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #bbbbbb;
+            margin-top: 28px;
+            margin-bottom: 12px;
+        }
+
+        .summary-text {
+            font-size: 13px;
+            color: #444444;
+        }
+
+        .entry {
+            margin-bottom: 18px;
+        }
+
+        .entry-header {
+            display: table;
+            width: 100%;
+        }
+
+        .entry-role {
+            display: table-cell;
+            font-weight: 500;
+            font-size: 14px;
+            color: #111111;
+        }
+
+        .entry-date {
+            display: table-cell;
+            text-align: right;
+            font-size: 11px;
+            color: #aaaaaa;
+            white-space: nowrap;
+            font-weight: 400;
+        }
+
+        .entry-company {
+            font-size: 12px;
+            color: #999999;
+            margin-bottom: 5px;
+        }
+
+        .entry-description {
+            font-size: 12.5px;
+            color: #555555;
+        }
+
+        .simple-inline-list {
+            font-size: 12.5px;
+            color: #555555;
+        }
+
+        .simple-inline-list span:not(:last-child):after {
+            content: " · ";
+            color: #cccccc;
+        }
+
+        a {
+            color: #555555;
+            text-decoration: none;
+            border-bottom: 1px solid #dddddd;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<p class="name">{{fullName}}</p>
+<p class="title">{{professionalTitle}}</p>
+<p class="contact-line">
+    {{email}} &nbsp; {{phoneNumber}} &nbsp; {{currentLocation}}
+    {{#hasLinkedIn}} &nbsp; <a href="{{linkedInUrl}}">LinkedIn</a>{{/hasLinkedIn}}
+    {{#hasGithub}} &nbsp; <a href="{{githubUrl}}">GitHub</a>{{/hasGithub}}
+    {{#hasPortfolio}} &nbsp; <a href="{{portfolioUrl}}">Portfolio</a>{{/hasPortfolio}}
+</p>
+
+<!-- ===== SUMMARY ===== -->
+<div class="section-title">Summary</div>
+<p class="summary-text">{{professionalSummary}}</p>
+
+<!-- ===== EXPERIENCE ===== -->
+<div class="section-title">Experience</div>
+{{#workExperiences}}
+<div class="entry">
+    <div class="entry-header">
+        <span class="entry-role">{{role}}</span>
+        <span class="entry-date">{{startDate}} — {{endDate}}</span>
+    </div>
+    <div class="entry-company">{{company}}</div>
+    <div class="entry-description">{{responsibilities}}</div>
+</div>
+{{/workExperiences}}
+
+<!-- ===== EDUCATION ===== -->
+<div class="section-title">Education</div>
+{{#educations}}
+<div class="entry">
+    <div class="entry-header">
+        <span class="entry-role">{{degree}}</span>
+        <span class="entry-date">{{startDate}} — {{graduationDate}}</span>
+    </div>
+    <div class="entry-company">{{institution}}</div>
+</div>
+{{/educations}}
+
+<!-- ===== SKILLS ===== -->
+<div class="section-title">Skills</div>
+<div class="simple-inline-list">
+    {{#skills}}<span>{{value}}</span>{{/skills}}
+</div>
+
+{{#hasProjects}}
+<div class="section-title">Projects</div>
+{{#projects}}
+<div class="entry">
+    <div class="entry-role">{{title}}</div>
+    <div class="entry-description">{{description}}</div>
+    {{#link}}<div class="entry-company"><a href="{{link}}">{{link}}</a></div>{{/link}}
+</div>
+{{/projects}}
+{{/hasProjects}}
+
+{{#hasCertifications}}
+<div class="section-title">Certifications</div>
+{{#certifications}}
+<div class="entry">
+    <div class="entry-header">
+        <span class="entry-role">{{name}}</span>
+        <span class="entry-date">{{issuedDate}}</span>
+    </div>
+    <div class="entry-company">{{issuer}}</div>
+</div>
+{{/certifications}}
+{{/hasCertifications}}
+
+{{#hasLanguages}}
+<div class="section-title">Languages</div>
+<div class="simple-inline-list">
+    {{#languages}}<span>{{value}}</span>{{/languages}}
+</div>
+{{/hasLanguages}}
+
+{{#hasInterests}}
+<div class="section-title">Interests</div>
+<div class="simple-inline-list">
+    {{#interests}}<span>{{value}}</span>{{/interests}}
+</div>
+{{/hasInterests}}
+
+{{#hasAchievements}}
+<div class="section-title">Achievements</div>
+<div class="summary-text">
+    {{#achievements}}<p style="margin: 4px 0;">{{value}}</p>{{/achievements}}
+</div>
+{{/hasAchievements}}
+
+{{#includeReferences}}
+<div class="section-title">References</div>
+<p class="summary-text">Available upon request</p>
+{{/includeReferences}}
+
+</body>
+</html>

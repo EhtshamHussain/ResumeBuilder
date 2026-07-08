@@ -10,7 +10,7 @@ class AuthRepositoryImpl(
     private val userDao: UserDao
 ) : AuthRepository {
     
-    override suspend fun login(email: String, password: String): Result<User> {
+    override suspend fun login(name: String, email: String, password: String): Result<User> {
         return try {
             val userEntity = userDao.login(email, password)
             if (userEntity != null) {

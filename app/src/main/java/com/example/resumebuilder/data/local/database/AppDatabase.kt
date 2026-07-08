@@ -15,7 +15,7 @@ import com.example.resumebuilder.data.local.entity.UserEntity
         ResumeEntity::class,
         TemplateEntity::class
     ],
-    version = 1
+    version = 2
 )
 abstract class AppDatabase : RoomDatabase() {
 

@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        /* ATS-Friendly template ka design goal: simple, single-column, koi tables/columns nahi
+           kyunki Applicant Tracking Systems (ATS bots) complex layouts sahi se parse nahi kar pate.
+           Isliye sirf plain black text, clear headings, minimal styling. */
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #1a1a1a;
+            margin: 0;
+            padding: 24px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 16px;
+            border-bottom: 2px solid #005EA4;
+            padding-bottom: 12px;
+        }
+
+        .name {
+            font-size: 26px;
+            font-weight: bold;
+            margin: 0;
+            color: #005EA4;
+        }
+
+        .title {
+            font-size: 16px;
+            margin: 4px 0;
+            color: #333333;
+        }
+
+        .contact-line {
+            font-size: 12px;
+            color: #444444;
+            margin-top: 6px;
+        }
+
+        .section {
+            margin-top: 18px;
+        }
+
+        .section-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #005EA4;
+            text-transform: uppercase;
+            border-bottom: 1px solid #cccccc;
+            padding-bottom: 4px;
+            margin-bottom: 8px;
+        }
+
+        .entry {
+            margin-bottom: 12px;
+        }
+
+        .entry-title {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .entry-subtitle {
+            font-style: italic;
+            font-size: 13px;
+            color: #555555;
+        }
+
+        .entry-date {
+            font-size: 12px;
+            color: #777777;
+            float: right;
+        }
+
+        .entry-description {
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .skills-list, .simple-list {
+            font-size: 13px;
+        }
+
+        .skill-item, .simple-item {
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .skill-item:after, .simple-item:after {
+            content: ",";
+        }
+
+        .skill-item:last-child:after, .simple-item:last-child:after {
+            content: "";
+        }
+
+        a {
+            color: #005EA4;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== HEADER: Naam, title, contact info ===== -->
+<div class="header">
+    <p class="name">{{fullName}}</p>
+    <p class="title">{{professionalTitle}}</p>
+    <p class="contact-line">
+        {{email}} | {{phoneNumber}} | {{currentLocation}}
+    </p>
+    <!-- Ye links sirf tab dikhengi jab user ne unhe fill kiya ho -->
+    <p class="contact-line">
+        {{#hasLinkedIn}}<a href="{{linkedInUrl}}">LinkedIn</a>{{/hasLinkedIn}}
+        {{#hasGithub}} | <a href="{{githubUrl}}">GitHub</a>{{/hasGithub}}
+        {{#hasPortfolio}} | <a href="{{portfolioUrl}}">Portfolio</a>{{/hasPortfolio}}
+    </p>
+</div>
+
+<!-- ===== PROFESSIONAL SUMMARY ===== -->
+<div class="section">
+    <div class="section-title">Professional Summary</div>
+    <p>{{professionalSummary}}</p>
+</div>
+
+<!-- ===== WORK EXPERIENCE ===== -->
+<!-- {{#workExperiences}}...{{/workExperiences}} ek loop hai:
+     jitni bhi entries list mein hongi (1, 2, 5...), utni baar ye block repeat hoga -->
+<div class="section">
+    <div class="section-title">Experience</div>
+    {{#workExperiences}}
+    <div class="entry">
+        <span class="entry-date">{{startDate}} - {{endDate}}</span>
+        <div class="entry-title">{{role}}</div>
+        <div class="entry-subtitle">{{company}}</div>
+        <div class="entry-description">{{responsibilities}}</div>
+    </div>
+    {{/workExperiences}}
+</div>
+
+<!-- ===== EDUCATION ===== -->
+<div class="section">
+    <div class="section-title">Education</div>
+    {{#educations}}
+    <div class="entry">
+        <span class="entry-date">{{startDate}} - {{graduationDate}}</span>
+        <div class="entry-title">{{degree}}</div>
+        <div class="entry-subtitle">{{institution}}</div>
+    </div>
+    {{/educations}}
+</div>
+
+<!-- ===== SKILLS ===== -->
+<div class="section">
+    <div class="section-title">Skills</div>
+    <div class="skills-list">
+        {{#skills}}<span class="skill-item">{{value}}</span>{{/skills}}
+    </div>
+</div>
+
+<!-- ===== PROJECTS (sirf tab dikhega jab koi project add kiya ho) ===== -->
+{{#hasProjects}}
+<div class="section">
+    <div class="section-title">Projects</div>
+    {{#projects}}
+    <div class="entry">
+        <div class="entry-title">{{title}}</div>
+        <div class="entry-description">{{description}}</div>
+        {{#link}}<div class="entry-subtitle"><a href="{{link}}">{{link}}</a></div>{{/link}}
+    </div>
+    {{/projects}}
+</div>
+{{/hasProjects}}
+
+<!-- ===== CERTIFICATIONS ===== -->
+{{#hasCertifications}}
+<div class="section">
+    <div class="section-title">Certifications</div>
+    {{#certifications}}
+    <div class="entry">
+        <span class="entry-date">{{issuedDate}}</span>
+        <div class="entry-title">{{name}}</div>
+        <div class="entry-subtitle">{{issuer}}</div>
+    </div>
+    {{/certifications}}
+</div>
+{{/hasCertifications}}
+
+<!-- ===== LANGUAGES ===== -->
+{{#hasLanguages}}
+<div class="section">
+    <div class="section-title">Languages</div>
+    <div class="simple-list">
+        {{#languages}}<span class="simple-item">{{value}}</span>{{/languages}}
+    </div>
+</div>
+{{/hasLanguages}}
+
+<!-- ===== INTERESTS ===== -->
+{{#hasInterests}}
+<div class="section">
+    <div class="section-title">Interests</div>
+    <div class="simple-list">
+        {{#interests}}<span class="simple-item">{{value}}</span>{{/interests}}
+    </div>
+</div>
+{{/hasInterests}}
+
+<!-- ===== ACHIEVEMENTS ===== -->
+{{#hasAchievements}}
+<div class="section">
+    <div class="section-title">Achievements</div>
+    <ul>
+        {{#achievements}}<li>{{value}}</li>{{/achievements}}
+    </ul>
+</div>
+{{/hasAchievements}}
+
+<!-- ===== REFERENCES ===== -->
+{{#includeReferences}}
+<div class="section">
+    <div class="section-title">References</div>
+    <p>Available upon request</p>
+</div>
+{{/includeReferences}}
+
+</body>
+</html>

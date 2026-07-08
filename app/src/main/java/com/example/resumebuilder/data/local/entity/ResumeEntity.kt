@@ -1,50 +1,100 @@
 package com.example.resumebuilder.data.local.entity
 
+
 import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(
-    tableName = "resumes",
-    foreignKeys = [
-        ForeignKey(
-            entity = UserEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["userId"],
-            onDelete = ForeignKey.CASCADE
-        )
-    ],
-    indices = [Index("userId")]
-)
+// Poora resume data ek hi row mein store hoga.
+// Lists (workExperiences, skills, waghera) ko JSON String mein convert karke store karenge,
+// kyunki Room directly List<CustomObject> store nahi kar sakta bina TypeConverter ke.
+@Entity(tableName = "resumes")
 data class ResumeEntity(
-
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
 
-    val userId: Long ,
+    // File/display name jo Home screen pa dikhega — jese "Ehtsham_Hussain_Resume"
+    val resumeName: String,
 
-    val title: String,
-
-    val templateId: Int,
-
+    // Contact & Summary
     val fullName: String,
-
+    val professionalTitle: String,
     val email: String,
+    val phoneNumber: String,
+    val currentLocation: String,
+    val professionalSummary: String,
 
-    val phone: String,
+    // Ye saari lists JSON string ki tarah save hongi (Gson se convert karke)
+    val workExperiencesJson: String,
+    val educationsJson: String,
+    val skillsJson: String,
+    val projectsJson: String,
+    val certificationsJson: String,
+    val languagesJson: String,
+    val interestsJson: String,
+    val achievementsJson: String,
 
-    val location: String,
+    // Professional Links
+    val linkedInUrl: String,
+    val githubUrl: String,
+    val portfolioUrl: String,
+    val includeReferences: Boolean,
 
-    val summary: String,
+    // Konsa template select hua tha
+    val selectedTemplateId: String,
 
-    val skills: String,
+    // Generated PDF ka file path (jab download hoga tab set hoga)
+    val pdfFilePath: String? = null,
 
-    val experience: String,
-
-    val education: String,
-
-    val projects: String,
-
-    val createdAt: Long
+    // Kab bana — Home screen pa sort/display ke liye
+    val createdAt: Long = System.currentTimeMillis()
 )
+
+//
+//import androidx.room.Entity
+//import androidx.room.ForeignKey
+//import androidx.room.Index
+//import androidx.room.PrimaryKey
+//
+//@Entity(
+//    tableName = "resumes",
+//    foreignKeys = [
+//        ForeignKey(
+//            entity = UserEntity::class,
+//            parentColumns = ["id"],
+//            childColumns = ["userId"],
+//            onDelete = ForeignKey.CASCADE
+//        )
+//    ],
+//    indices = [Index("userId")]
+//)
+//data class ResumeEntity(
+//
+//    @PrimaryKey(autoGenerate = true)
+//    val id: Long = 0,
+//
+//    val userId: Long ,
+//
+//    val title: String,
+//
+//    val templateId: Int,
+//
+//    val fullName: String,
+//
+//    val email: String,
+//
+//    val phone: String,
+//
+//    val location: String,
+//
+//    val summary: String,
+//
+//    val skills: String,
+//
+//    val experience: String,
+//
+//    val education: String,
+//
+//    val projects: String,
+//
+//    val createdAt: Long
+//)

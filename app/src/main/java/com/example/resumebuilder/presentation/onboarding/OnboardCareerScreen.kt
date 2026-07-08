@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Assignment
 import androidx.compose.material.icons.filled.Assignment
 import androidx.compose.material.icons.filled.FileDownload
 import androidx.compose.material.icons.filled.RocketLaunch
@@ -57,7 +58,7 @@ fun OnboardCareerScreen(
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     Icon(
-                        Icons.Default.Assignment,
+                        Icons.AutoMirrored.Filled.Assignment,
                         null,
                         tint = Color(0xFF005EA4),
                         modifier = Modifier.size(60.dp)

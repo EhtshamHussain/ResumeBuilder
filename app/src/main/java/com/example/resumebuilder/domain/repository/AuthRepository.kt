@@ -6,6 +6,7 @@ import com.example.resumebuilder.domain.model.User
 interface AuthRepository {
 
     suspend fun login(
+        name: String="",
         email: String,
         password: String
     ): Result<User>
@@ -14,11 +15,4 @@ interface AuthRepository {
 
     suspend fun isEmailExists(email: String): Boolean
 
-//    suspend fun signup(
-//        user: UserEntity
-//    )
-//
-//    suspend fun isEmailExists(
-//        email: String
-//    ): Boolean
 }

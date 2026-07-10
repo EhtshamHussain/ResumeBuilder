@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -37,6 +38,7 @@ import com.example.resumebuilder.screens.CustomButton
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 
+@Preview(showBackground = true , showSystemUi = true)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ResumePreviewScreen(
@@ -47,8 +49,7 @@ fun ResumePreviewScreen(
 ) {
     val context = LocalContext.current
 
-    // WebView instance ko remember karte hain — Download button click hone pa
-    // humein isi WebView ka current loaded content print karna hai
+
     val webView = remember { WebView(context) }
 
     LaunchedEffect(Unit) {
@@ -137,7 +138,6 @@ fun ResumePreviewScreen(
                         contentColor = Color(0xFF005EA4)
                     )
                     Spacer(modifier = Modifier.width(12.dp))
-
                     CustomButton(
                         onClick = {
                             actionEvent(ResumePreviewEvent.DownloadPdfClicked)

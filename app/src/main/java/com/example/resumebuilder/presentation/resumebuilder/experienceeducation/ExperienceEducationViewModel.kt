@@ -8,6 +8,7 @@ import com.example.resumebuilder.domain.model.Education
 import com.example.resumebuilder.domain.model.WorkExperience
 import com.example.resumebuilder.domain.repository.ResumeDraftRepository
 import com.example.resumebuilder.presentation.navigation.Routes
+import com.example.resumebuilder.presentation.shared.extension.vmScopeMain
 import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewModel
 import kotlinx.coroutines.launch
@@ -138,7 +139,7 @@ class ExperienceEducationViewModel(
             return
         }
 
-        viewModelScope.launch {
+        vmScopeMain {
             saveToRepository()
             navigate(NavigationAction.NavigateTo(Routes.SkillsProjects))
         }

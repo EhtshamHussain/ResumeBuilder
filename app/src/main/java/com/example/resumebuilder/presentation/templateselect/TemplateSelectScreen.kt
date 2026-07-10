@@ -1,5 +1,6 @@
 package com.example.resumebuilder.presentation.templateselect
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,6 +27,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.resumebuilder.domain.model.ResumeTemplate
@@ -36,6 +40,7 @@ import com.example.resumebuilder.screens.CustomButton
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 
+@Preview(showBackground = true)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TemplateSelectScreen(
@@ -138,11 +143,14 @@ private fun TemplateCard(
             // (drawable resource se painterResource use kar sakte ho jab thumbnails ban jayen)
             Card(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(120.dp),
+                    .fillMaxSize()
+                    ,
                 colors = CardDefaults.cardColors(containerColor = Color(0xFFE8F0F7)),
                 shape = RoundedCornerShape(8.dp)
-            ) {}
+            ) {
+                Image(painter = painterResource(template.img),contentDescription = null,
+                    contentScale = ContentScale.Crop)
+            }
 
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = template.displayName, fontSize = 15.sp, color = Color.Black)

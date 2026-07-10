@@ -1,5 +1,6 @@
 package com.example.resumebuilder.presentation.onboarding.components
 
+import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -19,20 +20,36 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+
 
 @Composable
 fun FloatingIllustration(
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit={}
 ) {
+
+    // it creates parent animation state that helps to perform multiple animation at the same time
+    //the declarative pattern of handling layout animations, where a parent composable observes a state change and orchestrates smooth transitions
     val infiniteTransition = rememberInfiniteTransition(label = "floating")
+
+
+//     infiniteTransition.animateFloat used for generic custom type of animation e:g Custom Objects, Rectangles, ya Integers
+//    infiniteTransition.animateValue()
+
+
+    // color changing animation with infinite duration
+//    infiniteTransition.animateColor()
+
+
+ //   Positions (X, Y coordinates), Opacity (Alpha/Fade), Rotation, or  Scale (Size zooming)
     val translationY by infiniteTransition.animateFloat(
         initialValue = 0f,
-        targetValue = -19f,
+        targetValue = -20f,
         animationSpec = infiniteRepeatable(
-            animation = tween(1000, easing = FastOutSlowInEasing),
+            animation = tween(1000, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse
         ),
         label = "yAnimation"

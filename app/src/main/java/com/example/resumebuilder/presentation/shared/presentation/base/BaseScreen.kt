@@ -1,4 +1,5 @@
 package com.example.resumebuilder.presentation.shared.presentation.base
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,8 +26,6 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun BaseScreen(
     modifier: Modifier = Modifier,
-    backGroundImg: Int? = null,
-    bgColor: Color = AppColors.White57,
     baseUIEvents: SharedFlow<BaseViewModel.BaseViewModelEvents>,
     navigation: (NavigationAction) -> Unit = {},
     content: @Composable () -> Unit,
@@ -37,23 +36,7 @@ fun BaseScreen(
     Box(
         modifier = modifier.fillMaxSize()
     ) {
-        // Background layer
-        if (backGroundImg != null) {
-            Image(
-                painter = painterResource(backGroundImg),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
-            )
-        } else {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(bgColor)
-            )
-        }
 
-        // Content layer
         content()
 
         if (showLoader) {
@@ -78,6 +61,7 @@ fun BaseScreen(
                     Toast.makeText(context, event.msg, Toast.LENGTH_SHORT).show()
                 }
                 is BaseViewModel.BaseViewModelEvents.ShowLoader -> {
+                    Log.d("BaseScreen", "Loader = ${event.show}")
                     showLoader = event.show
                 }
             }

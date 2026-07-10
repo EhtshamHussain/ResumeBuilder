@@ -16,8 +16,7 @@ class ResumeRepositoryImpl(
 
     override suspend fun saveResume(draft: ResumeDraft): Result<Long> {
         return try {
-            // Resume ka display name banate hain user ke fullName se
-            // e.g. "Ehtsham Hussain" -> "Ehtsham_Hussain_Resume"
+
             val resumeName = draft.fullName
                 .trim()
                 .replace(" ", "_")

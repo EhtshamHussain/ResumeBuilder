@@ -37,6 +37,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.resumebuilder.domain.model.Certification
@@ -50,6 +51,8 @@ import com.example.resumebuilder.screens.CustomTextField
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 
+
+@Preview(showBackground = true , showSystemUi = true)
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun SkillsProjectsScreen(
@@ -88,7 +91,7 @@ fun SkillsProjectsScreen(
             ) {
 
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "STEP 3 OF 4", fontSize = 12.sp, color = Color.Gray)
+                Text(text = "STEP 3 OF 4", fontSize = 12.sp, color = Color(0xFF005EA4))
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(text = "Skills & Projects", fontSize = 22.sp)
                 Spacer(modifier = Modifier.height(4.dp))

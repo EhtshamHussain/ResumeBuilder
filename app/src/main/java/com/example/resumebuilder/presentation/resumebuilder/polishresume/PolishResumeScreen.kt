@@ -33,6 +33,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
@@ -44,6 +45,7 @@ import com.example.resumebuilder.screens.CustomTextField
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 
+@Preview(showBackground = true , showSystemUi = true)
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun PolishResumeScreen(
@@ -82,7 +84,7 @@ fun PolishResumeScreen(
             ) {
 
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "STEP 4 OF 4", fontSize = 12.sp, color = Color.Gray)
+                Text(text = "STEP 4 OF 4", fontSize = 12.sp, color = Color(0xFF005EA4))
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(text = "Polish Your Resume", fontSize = 22.sp)
                 Spacer(modifier = Modifier.height(4.dp))
@@ -233,19 +235,17 @@ fun PolishResumeScreen(
                     CustomButton(
                         onClick = { actionEvent(PolishResumeEvent.SaveDraftClicked) },
                         text = "Save Draft",
-                        modifier = Modifier.weight(1f),
                         contentColor = Color(0xFF005EA4)
                     )
-                    Spacer(modifier = Modifier.width(12.dp))
+                    Spacer(modifier = Modifier.width(6.dp))
 
                     if (state.isLoading) {
                         CircularProgressIndicator(color = Color(0xFF005EA4))
                     } else {
                         CustomButton(
                             onClick = { actionEvent(PolishResumeEvent.FinishClicked) },
-                            text = "Finish & Select Template",
+                            text = "Finish ",
                             isLogin = true,
-                            modifier = Modifier.weight(1.5f),
                             contentColor = Color.White,
                             containerColor = Color(0xFF005EA4)
                         )

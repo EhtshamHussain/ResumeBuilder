@@ -80,6 +80,7 @@ fun AppNavigation(
         }
         composable<Routes.Login> {
             val viewModel : LoginViewModel = koinViewModel()
+
             LoginScreen(
                 baseUiEvent = viewModel.baseUIEvents,
                 navigation = {
@@ -246,8 +247,13 @@ fun AppNavigation(
             )
         }
 
+        /*** 500kb size of data ( Bundle and Intent Data ) conceptually limited to 1 MB
+         Exceeding this limit crashes your app with a TransactionTooLargeException ***/
+
         composable<Routes.ResumePreview> { backStackEntry ->
             val route: Routes.ResumePreview = backStackEntry.toRoute()
+//            val rid = route.rid
+//            val resumeId = route.resumeId
             val viewModel: ResumePreviewViewModel = koinViewModel { parametersOf(route.resumeId) }
 
             ResumePreviewScreen(

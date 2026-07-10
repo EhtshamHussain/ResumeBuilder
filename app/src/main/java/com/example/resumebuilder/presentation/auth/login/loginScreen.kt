@@ -44,8 +44,6 @@ fun LoginScreen(
     navigation: (NavigationAction) -> Unit = {},
     actionEvent: (LoginEvent) -> Unit = {},
 ) {
-//    val state by viewModel.state.collectAsState()
-
     BaseScreen(
         baseUIEvents = baseUiEvent,
         navigation = navigation
@@ -123,7 +121,8 @@ fun LoginScreen(
             )
 
         }
-
-
     }
 }
+
+
+

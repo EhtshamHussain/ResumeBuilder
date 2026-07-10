@@ -7,13 +7,10 @@ data class HomeState(
 
     val isFloatBtnClicked : Boolean = false,
     val isLoading: Boolean = false,
+
     val resumes: List<SavedResume> = emptyList(),
+
     val error: String? = null,
 
     val resumeIdPendingDelete: Long? = null
-)
-
-data class ResumeUi(
-    val id: String="",
-    val title: String=""
 )

@@ -1,5 +1,6 @@
 package com.example.resumebuilder.presentation.bottombar.homescreen
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -52,14 +53,14 @@ class HomeViewModel(
         }
     }
 
-    // Flow ko observe karte hain — jab bhi Room mein naya resume add ho, list automatically update hogi
-    // (isliye "loadResumes" ki jagah ab "observeResumes" — one-time fetch nahi, continuous observation hai)
+
     private fun observeResumes() {
         state = state.copy(isLoading = true)
-
+        showLoader()
         resumeRepository.getAllResumes()
             .onEach { resumes ->
                 state = state.copy(isLoading = false, resumes = resumes)
+                hideLoader()
             }
             .launchIn(viewModelScope)
     }
@@ -67,11 +68,9 @@ class HomeViewModel(
     private fun deleteResume() {
         val resumeId = state.resumeIdPendingDelete ?: return
 
-        viewModelScope.launch {
+        vmScopeMain{
             resumeRepository.deleteResume(resumeId)
                 .onSuccess {
-                    // Dialog band karo — list Flow se automatically update ho jayegi
-                    // (observeResumes() ka Flow observer khud naya data emit karega)
                     state = state.copy(resumeIdPendingDelete = null)
                     showToast("Resume deleted")
                 }
@@ -84,9 +83,3 @@ class HomeViewModel(
         }
     }
 }
-/**
-Kyun launchIn(viewModelScope), viewModelScope.launch { } nahi?
-Kyunki ye ek continuous stream hai (Flow), jo hamesha chalta rehta hai jab tak ViewModel zinda hai
-— har naye resume insert pa naya emission aata hai.
-launchIn isko automatically viewModelScope ke sath collect karta hai aur ViewModel clear hone pa khud cancel ho jata hai.
- ***/

@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
@@ -31,6 +32,7 @@ import com.example.resumebuilder.screens.CustomTextField
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 
+@Preview(showBackground = true , showSystemUi = true)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ContactSummaryScreen(
@@ -39,7 +41,6 @@ fun ContactSummaryScreen(
     navigation: (NavigationAction) -> Unit = {},
     actionEvent: (ContactSummaryEvent) -> Unit = {},
 ) {
-    // Screen pehli baar khulte hi purana draft data (agar hai) load karo
     LaunchedEffect(Unit) {
         actionEvent(ContactSummaryEvent.ScreenEntered)
     }
@@ -48,6 +49,7 @@ fun ContactSummaryScreen(
         baseUIEvents = baseUiEvent,
         navigation = navigation
     ) {
+
         Scaffold(
             topBar = {
                 TopAppBar(
@@ -56,7 +58,8 @@ fun ContactSummaryScreen(
             }
         ) { paddingValues ->
 
-            // verticalScroll lagaya kyunki form lamba hai — chhote screens pa content cut nahi hoga
+
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -66,7 +69,7 @@ fun ContactSummaryScreen(
             ) {
 
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "STEP 1 OF 4", fontSize = 12.sp, color = Color.Gray)
+                Text(text = "STEP 1 OF 4", fontSize = 12.sp, color = Color(0xFF005EA4))
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Row(
@@ -79,7 +82,6 @@ fun ContactSummaryScreen(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Progress bar — 4 steps mein se ye pehla hai, isliye 0.25f
                 LinearProgressIndicator(
                     progress = { 0.25f },
                     modifier = Modifier.fillMaxWidth(),

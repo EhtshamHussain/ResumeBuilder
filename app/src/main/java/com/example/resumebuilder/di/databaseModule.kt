@@ -54,17 +54,18 @@ val repositoryModule = module {
     single<AuthRepository> { AuthRepositoryImpl(get()) }
     single<ResumeDraftRepository>{ ResumeDraftRepositoryImpl() }
 
-//    single { MustacheRenderer(context = androidContext()) }
+//    single { MustacheRenderer(get()) }
        singleOf(::MustacheRenderer)
 
     single<ResumeRepository> {
         ResumeRepositoryImpl(
-            resumeDao = get<AppDatabase>().resumeDao(),
+//            resumeDao = get<AppDatabase>().resumeDao(),
+            resumeDao = get(),
             mustacheRenderer = get()
         )
     }
 
-//    single<ResumeRepository>(ResumeRepositoryImpl(get()))
+
 
 }
 
@@ -81,6 +82,7 @@ val viewModelModule = module {
     viewModelOf (::SkillsProjectsViewModel )
     viewModelOf (::PolishResumeViewModel )
 
+
     viewModel { (existingResumeId: Long?) ->
         TemplateSelectViewModel(
             existingResumeId = existingResumeId,
@@ -89,11 +91,12 @@ val viewModelModule = module {
         )
     }
 
+    /***Parameters Injection for ResumePreviewViewModel ***/
     viewModel { (resumeId: Long) ->
         ResumePreviewViewModel(
             resumeId = resumeId,
             resumeRepository = get(),
-            resumeDraftRepository = get()   // 👈 naya param add hua
+            resumeDraftRepository = get()
         )
     }
 

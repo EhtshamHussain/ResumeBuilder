@@ -30,7 +30,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.resumebuilder.domain.model.Education
@@ -44,6 +46,7 @@ import com.example.resumebuilder.screens.CustomTextField
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 
+@Preview(showBackground = true , showSystemUi = true)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExperienceEducationScreen(
@@ -82,7 +85,7 @@ fun ExperienceEducationScreen(
             ) {
 
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "STEP 2 OF 4", fontSize = 12.sp, color = Color.Gray)
+                Text(text = "STEP 2 OF 4", fontSize = 12.sp, color = Color(0xFF005EA4))
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(text = "Build your professional foundation", fontSize = 22.sp)
                 Spacer(modifier = Modifier.height(4.dp))
@@ -200,7 +203,8 @@ private fun WorkExperienceCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "COMPANY", fontSize = 12.sp, color = Color.Gray)
+                LabelText("COMPANY" , modifier = Modifier.fillMaxWidth(.5f))
+//                Text(text = "COMPANY", fontSize = 12.sp, color = Color.Gray)
                 IconButton(onClick = {
                     actionEvent(ExperienceEducationEvent.RemoveWorkExperience(experience.id))
                 }) {
@@ -230,8 +234,8 @@ private fun WorkExperienceCard(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            Row(modifier = Modifier.fillMaxWidth()) {
-                Column(modifier = Modifier.weight(1f)) {
+//            Row(modifier = Modifier.fillMaxWidth()) {
+//                Column(modifier = Modifier.weight(1f)) {
                     LabelText(text = "START DATE")
                     CustomTextField(
                         value = experience.startDate,
@@ -241,9 +245,9 @@ private fun WorkExperienceCard(
                         placeholder = "MM/YYYY",
                         modifier = Modifier.fillMaxWidth()
                     )
-                }
-                Spacer(modifier = Modifier.width(10.dp))
-                Column(modifier = Modifier.weight(1f)) {
+//                }
+                Spacer(modifier = Modifier.height(10.dp))
+//                Column(modifier = Modifier.weight(1f)) {
                     LabelText(text = "END DATE")
                     CustomTextField(
                         value = experience.endDate,
@@ -253,8 +257,8 @@ private fun WorkExperienceCard(
                         placeholder = "MM/YYYY",
                         modifier = Modifier.fillMaxWidth()
                     )
-                }
-            }
+//                }
+//            }
 
             Spacer(modifier = Modifier.height(10.dp))
             LabelText(text = "KEY RESPONSIBILITIES")

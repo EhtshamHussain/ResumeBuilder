@@ -11,12 +11,14 @@ data class ResumeTemplateData(
     val currentLocation: String,
     val professionalSummary: String,
 
-    // Loop ke liye lists — Mustache {{#workExperiences}}...{{/workExperiences}} se inhe iterate karega
-    val workExperiences: List<WorkExperienceMustache>,
-    val educations: List<EducationMustache>,
-    val skills: List<SkillMustache>,          // wrapper isliye kyunki Mustache simple string list ko
-    val projects: List<Project>,               // seedha loop nahi kar pata achi tarah, object behtar hai
+
+    val workExperiences: List<WorkExperience>,
+    val educations: List<Education>,
+    val projects: List<Project>,
     val certifications: List<Certification>,
+
+
+    val skills: List<SkillMustache>,
     val languages: List<SkillMustache>,
     val interests: List<SkillMustache>,
     val achievements: List<SkillMustache>,

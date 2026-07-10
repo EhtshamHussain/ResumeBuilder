@@ -8,8 +8,7 @@ import com.example.resumebuilder.domain.model.WorkExperience
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-// Ye class Room ko batati hai List<T> ko String mein kaise convert karna hai aur wapas
-// Gson library JSON serialization/deserialization ke liye use ki hai
+
 class Converters {
 
     private val gson = Gson()
@@ -62,7 +61,6 @@ class Converters {
         return gson.fromJson(json, type) ?: emptyList()
     }
 
-    // ---- Simple String List (Skills, Languages, Interests, Achievements sab isi ko use karenge) ----
     @TypeConverter
     fun fromStringList(list: List<String>): String {
         return gson.toJson(list)

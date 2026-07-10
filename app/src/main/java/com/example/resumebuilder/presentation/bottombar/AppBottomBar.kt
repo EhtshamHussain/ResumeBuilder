@@ -21,11 +21,10 @@ fun AppBottomBar(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination
 
-
-
     /**
      * Only for those screens that want bottom navigation bar
      */
+
     val shouldShowBottomBar = currentRoute?.hierarchy?.any { destination ->
         bottomBarItems.any { item ->
             destination.hasRoute(item.route::class)

@@ -4,15 +4,13 @@ import com.example.resumebuilder.data.local.entity.ResumeEntity
 import com.example.resumebuilder.domain.model.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-
-// Ye object sirf conversion ka kaam karta hai: ResumeDraft -> ResumeEntity (save karte waqt)
-// aur ResumeEntity -> SavedResume (fetch karte waqt). Gson yahan JSON serialize/deserialize karta hai.
 object ResumeMapper {
 
     private val gson = Gson()
-
-    // Save karte waqt: ResumeDraft (jisme Lists hain) ko ResumeEntity (jisme JSON strings hain) mein convert karo
-    fun draftToEntity(draft: ResumeDraft, resumeName: String): ResumeEntity {
+    fun draftToEntity(
+        draft: ResumeDraft,
+        resumeName: String
+    ): ResumeEntity {
         return ResumeEntity(
             resumeName = resumeName,
             fullName = draft.fullName,
@@ -46,6 +44,7 @@ object ResumeMapper {
             phoneNumber = entity.phoneNumber,
             currentLocation = entity.currentLocation,
             professionalSummary = entity.professionalSummary,
+//            Type Erasure
             workExperiences = gson.fromJson(
                 entity.workExperiencesJson,
                 object : TypeToken<List<WorkExperience>>() {}.type

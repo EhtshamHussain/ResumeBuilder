@@ -184,7 +184,9 @@
 <div class="entry">
     <div class="entry-role">{{title}}</div>
     <div class="entry-description">{{description}}</div>
-    {{#link}}<div class="entry-company"><a href="{{link}}">{{link}}</a></div>{{/link}}
+    {{#link}}
+    <div class="entry-company"><a href="{{link}}">{{link}}</a></div>
+    {{/link}}
 </div>
 {{/projects}}
 {{/hasProjects}}
@@ -215,7 +217,9 @@
 <hr class="divider">
 <div class="section-title">Achievements</div>
 <ul style="font-size:12.5px; padding-left:24px;">
-    {{#achievements}}<li>{{value}}</li>{{/achievements}}
+    {{#achievements}}
+    <li>{{value}}</li>
+    {{/achievements}}
 </ul>
 {{/hasAchievements}}
 

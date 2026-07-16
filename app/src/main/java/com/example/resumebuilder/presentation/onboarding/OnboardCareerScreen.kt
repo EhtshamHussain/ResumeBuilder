@@ -22,6 +22,7 @@ import com.example.resumebuilder.presentation.onboarding.components.FeatureCard
 import com.example.resumebuilder.presentation.onboarding.components.FloatingIllustration
 import com.example.resumebuilder.presentation.onboarding.components.OnboardingDescription
 import com.example.resumebuilder.presentation.onboarding.components.OnboardingTitle
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun OnboardCareerScreen(
@@ -36,37 +37,12 @@ fun OnboardCareerScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.weight(0.5f))
-
-        // Animated Illustration Placeholder
         FloatingIllustration(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(300.dp)
         ) {
-            Image(painter = painterResource(R.drawable.resumescreenlogo) , contentDescription = null)
-//            Box(
-//                modifier = Modifier
-//                    .size(180.dp, 220.dp)
-//                    .clip(RoundedCornerShape(24.dp))
-//                    .background(Color(0xFFE8F0F7)),
-//                contentAlignment = Alignment.Center
-//            ) {
-//                Column(
-//                    horizontalAlignment = Alignment.CenterHorizontally,
-//                    verticalArrangement = Arrangement.spacedBy(16.dp)
-//                ) {
-//                    Icon(
-//                        Icons.AutoMirrored.Filled.Assignment,
-//                        null,
-//                        tint = Color(0xFF005EA4),
-//                        modifier = Modifier.size(60.dp)
-//                    )
-//                    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-//                        Icon(Icons.Default.FileDownload, null, tint = Color(0xFF005EA4))
-//                        Icon(Icons.Default.Share, null, tint = Color(0xFF005EA4))
-//                    }
-//                }
-//            }
+            Image(painter = painterResource(R.drawable.resumescreenlogo), contentDescription = null)
         }
 
         Spacer(modifier = Modifier.height(40.dp))

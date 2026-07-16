@@ -40,7 +40,6 @@ fun CreateScreen(
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Text(text = "Create Resume", fontSize = 26.sp)
             Spacer(modifier = Modifier.height(24.dp))
 

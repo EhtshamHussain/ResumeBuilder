@@ -27,7 +27,6 @@ import com.example.resumebuilder.presentation.onboarding.components.OnboardingDe
 import com.example.resumebuilder.presentation.onboarding.components.OnboardingTitle
 
 @Preview(showBackground = true, showSystemUi = true)
-
 @Composable
 fun OnboardResumeScreen(
     onNextClick: () -> Unit = {},
@@ -40,7 +39,6 @@ fun OnboardResumeScreen(
             .padding(top = 20.dp, bottom = 40.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Top Bar
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -63,59 +61,12 @@ fun OnboardResumeScreen(
         }
 
         Spacer(modifier = Modifier.weight(0.5f))
-
-        // Animated Illustration
         FloatingIllustration(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(320.dp)
         ) {
-            Image(painter = painterResource(R.drawable.finalscreenlogo) , contentDescription = null)
-
-//            Box(
-//                modifier = Modifier
-//                    .fillMaxWidth(0.8f)
-//                    .height(240.dp)
-//            ) {
-//                // Large Document Placeholder
-//                Box(
-//                    modifier = Modifier
-//                        .size(160.dp, 200.dp)
-//                        .clip(RoundedCornerShape(16.dp))
-//                        .background(Color(0xFFF4F7FA))
-//                        .align(Alignment.Center)
-//                        .padding(16.dp)
-//                ) {
-//                    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-//                        repeat(4) {
-//                            Box(modifier = Modifier.height(4.dp).fillMaxWidth().background(Color(0xFFE0E0E0)))
-//                        }
-//                    }
-//                }
-//                // Small Floating Icons
-//                Icon(
-//                    Icons.Default.Description,
-//                    null,
-//                    tint = Color(0xFF005EA4),
-//                    modifier = Modifier
-//                        .size(40.dp)
-//                        .align(Alignment.TopStart)
-//                        .clip(RoundedCornerShape(8.dp))
-//                        .background(Color(0xFFE8F0F7))
-//                        .padding(8.dp)
-//                )
-//                Icon(
-//                    Icons.Default.Edit,
-//                    null,
-//                    tint = Color(0xFF005EA4),
-//                    modifier = Modifier
-//                        .size(40.dp)
-//                        .align(Alignment.TopEnd)
-//                        .clip(RoundedCornerShape(8.dp))
-//                        .background(Color(0xFFE8F0F7))
-//                        .padding(8.dp)
-//                )
-//            }
+            Image(painter = painterResource(R.drawable.finalscreenlogo), contentDescription = null)
         }
 
         Spacer(modifier = Modifier.height(40.dp))

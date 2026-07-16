@@ -1,13 +1,8 @@
 package com.example.resumebuilder.presentation.shared.presentation.component.topappbar
 
-
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -15,6 +10,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -25,28 +24,27 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun AppScaffold(
     modifier: Modifier = Modifier,
-
     title: String,
-
     navigationIcon: ImageVector? = null,
     onNavigationClick: (() -> Unit)? = null,
-
     actionIcon: ImageVector? = null,
     onActionClick: (() -> Unit)? = null,
-
     floatingActionButton: (@Composable () -> Unit)? = null,
-
     containerColor: Color = Color.White,
-
     content: @Composable (PaddingValues) -> Unit
 ) {
-
+    var lastClickTime by remember { mutableLongStateOf(0L) }
+    fun debouncedClick(action: () -> Unit) {
+        val now = System.currentTimeMillis()
+        if (now - lastClickTime > 500L) {
+            lastClickTime = now
+            action()
+        }
+    }
     Scaffold(
         modifier = modifier.fillMaxSize(),
-
         topBar = {
             TopAppBar(
-
                 title = {
                     Text(
                         text = title,
@@ -55,13 +53,11 @@ fun AppScaffold(
                         color = Color(0xFF005EA4)
                     )
                 },
-
                 navigationIcon = {
                     navigationIcon?.let {
-
                         IconButton(
                             onClick = {
-                                onNavigationClick?.invoke()
+                                debouncedClick { onNavigationClick?.invoke() }
                             }
                         ) {
                             Icon(
@@ -72,11 +68,8 @@ fun AppScaffold(
                         }
                     }
                 },
-
                 actions = {
-
                     actionIcon?.let {
-
                         IconButton(
                             onClick = {
                                 onActionClick?.invoke()
@@ -89,21 +82,16 @@ fun AppScaffold(
                             )
                         }
                     }
-
                 },
-
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color.White
                 )
             )
         },
-
         floatingActionButton = {
             floatingActionButton?.invoke()
         },
-
         containerColor = containerColor,
-
         content = content
     )
 }

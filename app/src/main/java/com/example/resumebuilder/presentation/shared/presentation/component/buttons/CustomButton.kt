@@ -1,6 +1,5 @@
 package com.example.resumebuilder.screens
 
-
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,9 +25,9 @@ import androidx.compose.ui.unit.sp
     device = Devices.PIXEL,
     showBackground = true
 )
-
 @Composable
 fun CustomButton(
+    modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
     text: String = "",
     icon: ImageVector = Icons.AutoMirrored.Filled.ArrowForward,
@@ -37,19 +36,16 @@ fun CustomButton(
     isSimple: Boolean = false,
     isWithIcon: Boolean = false,
     containerColor: Color = Color.Unspecified,
-    contentColor: Color=Color.Unspecified,
-    modifier: Modifier = Modifier
-
-) {
+    contentColor: Color = Color.Unspecified,
+    ) {
     OutlinedButton(
         onClick = onClick,
-        colors = if (containerColor == Color.Unspecified && contentColor==Color.Unspecified) {
+        colors = if (containerColor == Color.Unspecified && contentColor == Color.Unspecified) {
             ButtonDefaults.outlinedButtonColors()
         } else {
             ButtonDefaults.outlinedButtonColors(
                 containerColor = containerColor,
                 contentColor = contentColor
-
             )
         },
         modifier = modifier
@@ -58,13 +54,11 @@ fun CustomButton(
             Row(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
-
                 ) {
                 Text(text, fontSize = 21.sp)
-                Spacer(modifier= Modifier.width(5.dp))
+                Spacer(modifier = Modifier.width(5.dp))
                 Icon(imageVector = icon, contentDescription = null, modifier = Modifier.size(30.dp))
             }
         } else Text(text, fontSize = 21.sp)
     }
-
 }

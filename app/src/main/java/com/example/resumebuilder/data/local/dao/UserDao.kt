@@ -7,13 +7,10 @@ import com.example.resumebuilder.data.local.entity.UserEntity
 
 @Dao
 interface UserDao {
-
     @Insert
     suspend fun insert(user: UserEntity)
-
     @Query("SELECT * FROM users WHERE email = :email")
     suspend fun getUser(email: String): UserEntity?
-
     @Query("SELECT * FROM users WHERE email=:email AND password=:password")
     suspend fun login(
         email: String,

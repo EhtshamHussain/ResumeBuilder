@@ -14,7 +14,6 @@ private val DarkColorScheme = darkColorScheme(
     onBackground = AppColors.TextPrimary,
     onSurface = AppColors.TextPrimary
 )
-
 @Composable
 fun CoreTheme(
     content: @Composable () -> Unit

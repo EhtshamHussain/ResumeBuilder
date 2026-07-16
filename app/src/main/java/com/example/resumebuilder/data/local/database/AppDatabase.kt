@@ -15,13 +15,10 @@ import com.example.resumebuilder.data.local.entity.UserEntity
         ResumeEntity::class,
         TemplateEntity::class
     ],
-    version = 2
+    version = 1
 )
 abstract class AppDatabase : RoomDatabase() {
-
     abstract fun userDao(): UserDao
-
     abstract fun resumeDao(): ResumeDao
-
     abstract fun templateDao(): TemplateDao
 }

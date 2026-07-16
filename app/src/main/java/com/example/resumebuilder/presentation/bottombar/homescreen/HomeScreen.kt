@@ -46,105 +46,29 @@ import com.example.resumebuilder.domain.model.SavedResume
 import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseScreen
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewModel
+import com.example.resumebuilder.presentation.shared.presentation.component.circularbar.CircularProgress
 import com.example.resumebuilder.presentation.shared.presentation.component.topappbar.AppScaffold
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     state: HomeState = HomeState(),
-    baseUiEvent: SharedFlow<BaseViewModel.BaseViewModelEvents> = MutableSharedFlow(),
+    baseUiEvent: SharedFlow<BaseViewModel.BaseViewModelEvents>,
     actionEvent: (HomeEvent) -> Unit = {},
     navigation: (NavigationAction) -> Unit = {}
 ) {
-
-    LaunchedEffect(Unit) {
-        actionEvent(HomeEvent.ScreenEntered)
-    }
-
     BaseScreen(
         baseUIEvents = baseUiEvent,
         navigation = navigation,
     ) {
-
-//        Scaffold(
-//            topBar = {
-//                CustomTopAppBar(
-//                    topbarText = "CareerSync AI",
-//                    onNavigationClick = { navigation(NavigationAction.PopBackStack) },
-//                    onActionClick = { actionEvent(HomeEvent.SettingsClicked) }
-//                )
-////                TopAppBar(
-////                    title = {
-////                        Row(
-////                            verticalAlignment = Alignment.CenterVertically,
-////                            horizontalArrangement = Arrangement.spacedBy(12.dp)
-////                        ) {
-////
-////                            Box(
-////                                modifier = Modifier
-////                                    .size(36.dp)
-////                                    .clip(CircleShape)
-////                                    .background(Color(0xFFE8F0F7)),
-////                                contentAlignment = Alignment.Center
-////                            ) {
-////                                Icon(
-////                                    imageVector = Icons.Default.Person,
-////                                    contentDescription = null,
-////                                    tint = Color(0xFF005EA4)
-////                                )
-////                            }
-////                            Text(
-////                                text = "CareerSync AI",
-////                                fontSize = 18.sp,
-////                                fontWeight = FontWeight.Bold,
-////                                color = Color(0xFF005EA4)
-////                            )
-////                        }
-////                    },
-////                    actions = {
-////                        IconButton(onClick = { actionEvent(HomeEvent.SettingsClicked) }) {
-////                            Icon(
-////                                imageVector = Icons.Default.Settings,
-////                                contentDescription = "Settings",
-////                                tint = Color(0xFF005EA4)
-////                            )
-////                        }
-////                    },
-////                    colors = TopAppBarDefaults.topAppBarColors(
-////                        containerColor = Color.White
-////                    )
-////                )
-//            },
-//            floatingActionButton = {
-//                FloatingActionButton(
-//                    onClick = { actionEvent(HomeEvent.AddResumeClicked) },
-//                    containerColor = Color(0xFF005EA4),
-//                    contentColor = Color.White,
-//                    shape = RoundedCornerShape(16.dp),
-//                    modifier = Modifier.padding(bottom = 16.dp, end = 8.dp)
-//                ) {
-//                    Icon(Icons.Default.Add, contentDescription = "Add Resume")
-//                }
-//            },
-//            containerColor = Color.White
-//        ) { paddingValues ->
-//
-//
-
         AppScaffold(
-
             title = "CareerSync AI",
-
             actionIcon = Icons.Default.Settings,
-
             onActionClick = {
                 actionEvent(HomeEvent.SettingsClicked)
             },
-
             floatingActionButton = {
-
                 FloatingActionButton(
                     onClick = {
                         actionEvent(HomeEvent.AddResumeClicked)
@@ -157,18 +81,16 @@ fun HomeScreen(
                     )
                 }
             }
-
         ) { paddingValues ->
-
-            // Screen Content
-
-
             when {
+                state.isLoading -> {
+                    CircularProgress(modifier = Modifier.padding(paddingValues))
+                }
 
-                state.isLoading -> {}
                 state.resumes.isEmpty() -> {
                     EmptyResumesContent(modifier = Modifier.padding(paddingValues))
                 }
+
                 else -> {
                     ResumesListContent(
                         resumes = state.resumes,
@@ -184,18 +106,16 @@ fun HomeScreen(
                     )
                 }
             }
-
-            if (state.resumeIdPendingDelete != null) {
-                DeleteConfirmationDialog(
-                    onConfirm = { actionEvent(HomeEvent.DeleteConfirmed) },
-                    onCancel = { actionEvent(HomeEvent.DeleteCancelled) }
-                )
-            }
         }
+    }
 
+    if (state.resumeIdPendingDelete != null) {
+        DeleteConfirmationDialog(
+            onConfirm = { actionEvent(HomeEvent.DeleteConfirmed) },
+            onCancel = { actionEvent(HomeEvent.DeleteCancelled) }
+        )
     }
 }
-
 @Composable
 private fun DeleteConfirmationDialog(
     onConfirm: () -> Unit,
@@ -229,7 +149,7 @@ private fun ResumesListContent(
             .fillMaxSize()
             .padding(horizontal = 20.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
-        contentPadding =PaddingValues(vertical = 16.dp)
+        contentPadding = PaddingValues(vertical = 16.dp)
     ) {
         items(resumes) { resume ->
             Card(
@@ -245,7 +165,6 @@ private fun ResumesListContent(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-//                    modifier = Modifier.weight(1f)
                     Column() {
                         Text(
                             text = resume.resumeName,
@@ -273,8 +192,6 @@ private fun ResumesListContent(
         }
     }
 }
-
-
 @Composable
 private fun EmptyResumesContent(modifier: Modifier = Modifier) {
     Column(

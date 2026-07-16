@@ -1,7 +1,6 @@
 package com.example.resumebuilder.presentation.onboarding
 
 import androidx.compose.foundation.Image
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import com.example.resumebuilder.R
@@ -35,15 +34,12 @@ import com.example.resumebuilder.presentation.shared.presentation.base.BaseScree
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun OnboardWelcomeScreen(
     onNextClick: () -> Unit = {},
     onSkipClick: () -> Unit = {},
-
-) {
-
+    ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -52,8 +48,6 @@ fun OnboardWelcomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.weight(0.5f))
-
-        // Animated Illustration Placeholder
         FloatingIllustration(
             modifier = Modifier
                 .fillMaxWidth()
@@ -66,7 +60,6 @@ fun OnboardWelcomeScreen(
                     .background(Color(0xFFE8F0F7)),
                 contentAlignment = Alignment.Center
             ) {
-
                 Card(
                     modifier = Modifier
                         .size(220.dp, 180.dp)
@@ -77,8 +70,10 @@ fun OnboardWelcomeScreen(
                         containerColor = Color.White
                     )
                 ) {
-                    Image(painter = painterResource(R.drawable.welocmefloatingcard), contentDescription = null)
-
+                    Image(
+                        painter = painterResource(R.drawable.welocmefloatingcard),
+                        contentDescription = null
+                    )
                 }
             }
         }

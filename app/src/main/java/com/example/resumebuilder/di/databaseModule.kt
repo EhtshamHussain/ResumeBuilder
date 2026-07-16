@@ -30,45 +30,30 @@ import org.koin.dsl.module
 import org.koin.plugin.module.dsl.viewModel
 
 val databaseModule = module {
-
     single {
-
         Room.databaseBuilder(
                 get(),
                 AppDatabase::class.java,
                 "resume_db"
-            ).fallbackToDestructiveMigration(true).build()
+            )
+            .build()
     }
-
     single { get<AppDatabase>().userDao() }
-
     single { get<AppDatabase>().resumeDao() }
-
     single { get<AppDatabase>().templateDao() }
-
     single { SessionManager(get()) }
-
-
 }
 val repositoryModule = module {
     single<AuthRepository> { AuthRepositoryImpl(get()) }
     single<ResumeDraftRepository>{ ResumeDraftRepositoryImpl() }
-
-//    single { MustacheRenderer(get()) }
        singleOf(::MustacheRenderer)
-
     single<ResumeRepository> {
         ResumeRepositoryImpl(
-//            resumeDao = get<AppDatabase>().resumeDao(),
             resumeDao = get(),
             mustacheRenderer = get()
         )
     }
-
-
-
 }
-
 val viewModelModule = module {
     viewModelOf(::LoginViewModel)
     viewModelOf(::SignUpViewModel)
@@ -76,13 +61,10 @@ val viewModelModule = module {
     viewModelOf( ::CreateViewModel )
     viewModelOf( ::ProfileViewModel)
     viewModelOf (:: ContactSummaryViewModel)
-
     viewModelOf (:: ContactSummaryViewModel)
     viewModelOf (::ExperienceEducationViewModel )
     viewModelOf (::SkillsProjectsViewModel )
     viewModelOf (::PolishResumeViewModel )
-
-
     viewModel { (existingResumeId: Long?) ->
         TemplateSelectViewModel(
             existingResumeId = existingResumeId,
@@ -90,7 +72,6 @@ val viewModelModule = module {
             resumeRepository = get()
         )
     }
-
     /***Parameters Injection for ResumePreviewViewModel ***/
     viewModel { (resumeId: Long) ->
         ResumePreviewViewModel(
@@ -99,8 +80,6 @@ val viewModelModule = module {
             resumeDraftRepository = get()
         )
     }
-
-
     viewModel { ProfileViewModel(sessionManager = get(), resumeRepository = get()) }
 }
 

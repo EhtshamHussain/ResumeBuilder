@@ -21,29 +21,26 @@ import androidx.compose.ui.unit.sp
 fun OrDivider() {
     Row(
         modifier = Modifier
-            .fillMaxWidth() // Parent ki full width le raha hai
-            .padding(horizontal = 16.dp), // Thoda side padding (optional)
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Left Line (Align to start)
         Box(
             modifier = Modifier
-                .weight(1f) // remaining space le raha hai
-                .height(1.dp) // Line ki height (motai)
-                .fillMaxWidth(.9f) // Aapki demand ke mutabiq 90% width
-                .background(Color.LightGray.copy(alpha = 0.8f)) // Line ka color
+                .weight(1f)
+                .height(1.dp)
+                .fillMaxWidth(.9f)
+                .background(Color.LightGray.copy(alpha = 0.8f))
         )
 
-        // "OR" Text
         Text(
             text = "OR",
             color = Color.Gray,
             fontSize = 14.sp,
             fontWeight = FontWeight.Medium,
-            modifier = Modifier.padding(horizontal = 12.dp) // Line aur text ke beech ka gap
+            modifier = Modifier.padding(horizontal = 12.dp)
         )
 
-        // Right Line (Align to end)
         Box(
             modifier = Modifier
                 .weight(1f)

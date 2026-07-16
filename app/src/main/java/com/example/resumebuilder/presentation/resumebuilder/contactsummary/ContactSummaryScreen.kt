@@ -10,14 +10,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,13 +24,16 @@ import androidx.compose.ui.unit.sp
 import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseScreen
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewModel
+import com.example.resumebuilder.presentation.shared.presentation.component.circularbar.CircularProgress
 import com.example.resumebuilder.presentation.shared.presentation.component.labels.LabelText
+import com.example.resumebuilder.presentation.shared.presentation.component.linearprogressindicator.LinearProgressBar
+import com.example.resumebuilder.presentation.shared.presentation.component.topappbar.AppScaffold
 import com.example.resumebuilder.screens.CustomButton
 import com.example.resumebuilder.screens.CustomTextField
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 
-@Preview(showBackground = true , showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = true)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ContactSummaryScreen(
@@ -41,25 +42,17 @@ fun ContactSummaryScreen(
     navigation: (NavigationAction) -> Unit = {},
     actionEvent: (ContactSummaryEvent) -> Unit = {},
 ) {
-    LaunchedEffect(Unit) {
-        actionEvent(ContactSummaryEvent.ScreenEntered)
-    }
-
     BaseScreen(
         baseUIEvents = baseUiEvent,
         navigation = navigation
     ) {
-
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text("CareerSync AI", color = Color(0xFF005EA4), fontSize = 18.sp) }
-                )
+        AppScaffold(
+            title = "Contact & Summary",
+            navigationIcon = Icons.AutoMirrored.Filled.ArrowBack,
+            onNavigationClick = {
+                navigation(NavigationAction.PopBackStack)
             }
         ) { paddingValues ->
-
-
-
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -67,7 +60,6 @@ fun ContactSummaryScreen(
                     .padding(horizontal = 20.dp)
                     .verticalScroll(rememberScrollState())
             ) {
-
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(text = "STEP 1 OF 4", fontSize = 12.sp, color = Color(0xFF005EA4))
                 Spacer(modifier = Modifier.height(4.dp))
@@ -82,11 +74,7 @@ fun ContactSummaryScreen(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                LinearProgressIndicator(
-                    progress = { 0.25f },
-                    modifier = Modifier.fillMaxWidth(),
-                    color = Color(0xFF005EA4)
-                )
+                LinearProgressBar(0.25f)
 
                 Spacer(modifier = Modifier.height(20.dp))
 
@@ -95,7 +83,8 @@ fun ContactSummaryScreen(
                 CustomTextField(
                     value = state.fullName,
                     onValueChange = {
-                        actionEvent(ContactSummaryEvent.FullNameChanged(it)) },
+                        actionEvent(ContactSummaryEvent.FullNameChanged(it))
+                    },
                     placeholder = "e.g. Cpl Price",
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -170,9 +159,8 @@ fun ContactSummaryScreen(
                 }
 
                 if (state.isLoading) {
-                    CircularProgressIndicator(color = Color(0xFF005EA4))
+                    CircularProgress()
                 } else {
-                    // Tumhara existing CustomButton reuse kiya — isLogin=true se icon+text side by side aayega
                     CustomButton(
                         onClick = { actionEvent(ContactSummaryEvent.NextStepClicked) },
                         text = "Next Step",

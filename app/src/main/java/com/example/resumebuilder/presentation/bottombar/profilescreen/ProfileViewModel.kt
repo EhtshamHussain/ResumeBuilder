@@ -11,13 +11,13 @@ import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(
     private val sessionManager: SessionManager,
-    private val resumeRepository: ResumeRepository   // 👈 naya — resume count ke liye chahiye
+    private val resumeRepository: ResumeRepository
 ) : BaseViewModel() {
-
     var state by mutableStateOf(ProfileState())
         private set
 
@@ -36,28 +36,27 @@ class ProfileViewModel(
                 logout()
             }
 
-            // Abhi ye 3 events sirf placeholder hain — koi navigation/logic nahi
-            // (jaisa tumne bola tha "wo bs show hon working ne krni")
-            is ProfileEvent.PersonalInformationClicked -> { /* future mein implement hoga */ }
-            is ProfileEvent.NotificationPreferencesClicked -> { /* future mein implement hoga */ }
-            is ProfileEvent.PrivacySecurityClicked -> { /* future mein implement hoga */ }
+            is ProfileEvent.PersonalInformationClicked -> { /* future mein implement hoga */
+            }
+
+            is ProfileEvent.NotificationPreferencesClicked -> { /* future mein implement hoga */
+            }
+
+            is ProfileEvent.PrivacySecurityClicked -> { /* future mein implement hoga */
+            }
         }
     }
-
     private fun loadProfile() {
         viewModelScope.launch {
             state = state.copy(isLoading = true, error = null)
-
-            // Placeholder — jab UserRepository/session se real naam-email milega, yahan use karo
             state = state.copy(
                 isLoading = false,
-                name = sessionManager.getUserName() ?: "User",     // ye method SessionManager mein banana hoga agar nahi hai
-                email = sessionManager.getUserEmail() ?: ""         // ye bhi
+                name = sessionManager.getUserName()
+                    ?: "User",
+                email = sessionManager.getUserEmail() ?: ""
             )
         }
     }
-
-    // Room se live resume count — jab bhi naya resume banega ye automatically update hoga
     private fun observeResumeCount() {
         resumeRepository.getAllResumes()
             .onEach { resumes ->
@@ -65,7 +64,6 @@ class ProfileViewModel(
             }
             .launchIn(viewModelScope)
     }
-
     private fun logout() {
         sessionManager.logout()
         navigate(

@@ -31,20 +31,18 @@ fun FloatingIllustration(
     content: @Composable () -> Unit={}
 ) {
 
-    // it creates parent animation state that helps to perform multiple animation at the same time
-    //the declarative pattern of handling layout animations, where a parent composable observes a state change and orchestrates smooth transitions
+    /*** it creates parent animation state that helps to perform multiple animation at the same time
+    the declarative pattern of handling layout animations, where a parent composable observes a state change and orchestrates smooth transitions */
     val infiniteTransition = rememberInfiniteTransition(label = "floating")
 
+    /** infiniteTransition.animateFloat used for generic custom type of animation e:g Custom Objects, Rectangles, ya Integers
+        infiniteTransition.animateValue() */
 
-//     infiniteTransition.animateFloat used for generic custom type of animation e:g Custom Objects, Rectangles, ya Integers
-//    infiniteTransition.animateValue()
+    /** color changing animation with infinite duration
+        infiniteTransition.animateColor() */
 
+ /**   Positions (X, Y coordinates), Opacity (Alpha/Fade), Rotation, or  Scale (Size zooming) */
 
-    // color changing animation with infinite duration
-//    infiniteTransition.animateColor()
-
-
- //   Positions (X, Y coordinates), Opacity (Alpha/Fade), Rotation, or  Scale (Size zooming)
     val translationY by infiniteTransition.animateFloat(
         initialValue = 0f,
         targetValue = -20f,
@@ -54,7 +52,6 @@ fun FloatingIllustration(
         ),
         label = "yAnimation"
     )
-
     Box(
         modifier = modifier.graphicsLayer(translationY = translationY),
         contentAlignment = Alignment.Center
@@ -62,7 +59,6 @@ fun FloatingIllustration(
         content()
     }
 }
-
 @Composable
 fun FeatureCard(
     icon: ImageVector,

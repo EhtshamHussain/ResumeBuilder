@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-fun ViewModel.vmScopeMain(block : suspend CoroutineScope.() -> Unit): Job {
+fun ViewModel.vmScopeMain(block: suspend CoroutineScope.() -> Unit): Job {
     return viewModelScope.launch {
         block()
     }

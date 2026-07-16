@@ -1,4 +1,3 @@
-
 package com.example.resumebuilder.presentation.bottombar.createscreen
 
 data class CreateState(

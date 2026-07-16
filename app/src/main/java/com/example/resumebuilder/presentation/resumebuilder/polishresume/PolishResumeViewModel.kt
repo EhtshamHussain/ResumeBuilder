@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.example.resumebuilder.domain.repository.ResumeDraftRepository
 import com.example.resumebuilder.presentation.navigation.Routes
+import com.example.resumebuilder.presentation.shared.extension.vmScopeMain
 import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewModel
 import kotlinx.coroutines.launch
@@ -13,51 +14,55 @@ import kotlinx.coroutines.launch
 class PolishResumeViewModel(
     private val resumeDraftRepository: ResumeDraftRepository
 ) : BaseViewModel() {
-
     var state by mutableStateOf(PolishResumeState())
         private set
 
+    init {
+        loadExistingDraft()
+    }
+
     fun onEvent(event: PolishResumeEvent) {
         when (event) {
-            is PolishResumeEvent.ScreenEntered -> loadExistingDraft()
-
-            // ---- Languages ----
             is PolishResumeEvent.LanguageInputChanged -> {
                 state = state.copy(currentLanguageInput = event.value)
             }
+
             is PolishResumeEvent.AddLanguageClicked -> addLanguage()
             is PolishResumeEvent.RemoveLanguage -> {
                 state = state.copy(languages = state.languages.filter { it != event.language })
             }
 
-            // ---- Interests ----
             is PolishResumeEvent.InterestInputChanged -> {
                 state = state.copy(currentInterestInput = event.value)
             }
+
             is PolishResumeEvent.AddInterestClicked -> addInterest()
             is PolishResumeEvent.RemoveInterest -> {
                 state = state.copy(interests = state.interests.filter { it != event.interest })
             }
 
-            // ---- Achievements ----
             is PolishResumeEvent.AchievementInputChanged -> {
                 state = state.copy(currentAchievementInput = event.value)
             }
+
             is PolishResumeEvent.AddAchievementClicked -> addAchievement()
             is PolishResumeEvent.RemoveAchievement -> {
-                state = state.copy(achievements = state.achievements.filter { it != event.achievement })
+                state =
+                    state.copy(achievements = state.achievements.filter { it != event.achievement })
             }
 
-            // ---- Links ----
             is PolishResumeEvent.LinkedInChanged -> {
                 state = state.copy(linkedInUrl = event.value)
             }
+
             is PolishResumeEvent.GithubChanged -> {
                 state = state.copy(githubUrl = event.value)
             }
+
             is PolishResumeEvent.PortfolioChanged -> {
                 state = state.copy(portfolioUrl = event.value)
             }
+
             is PolishResumeEvent.IncludeReferencesToggled -> {
                 state = state.copy(includeReferences = event.value)
             }
@@ -135,14 +140,12 @@ class PolishResumeViewModel(
         }
     }
 
-    // Ye screen "Finish & Select Template" pa Template Selection screen pa le jati hai
-    // (final Room save NAHI hoga yahan — wo hoga Template select hone ke baad, Preview screen se pehle)
     private fun finishAndProceed() {
-        viewModelScope.launch {
+        vmScopeMain {
             saveToRepository()
             navigate(
                 NavigationAction.NavigateTo(
-                    route = Routes.TemplateSelect(existingResumeId = null)   // naya resume — normal flow
+                    route = Routes.TemplateSelect(existingResumeId = null)
                 )
             )
         }

@@ -8,9 +8,7 @@ import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewM
 import kotlinx.coroutines.launch
 
 class CreateViewModel(
-    // yahan future mein GenerateResumeUseCase / ResumeRepository inject hoga
 ) : BaseViewModel() {
-
     var state by mutableStateOf(CreateState())
         private set
 
@@ -38,12 +36,6 @@ class CreateViewModel(
 
         viewModelScope.launch {
             state = state.copy(isLoading = true, error = null)
-
-            // Placeholder — jab UseCase/Repository ready ho:
-            // resumeRepository.generateResume(state.resumeTitle, state.jobDescription)
-            //     .onSuccess { navigate(NavigationAction.NavigateTo(Routes.ResumePreview)) }
-            //     .onFailure { error -> state = state.copy(isLoading = false, error = error.message) }
-
             state = state.copy(isLoading = false)
         }
     }

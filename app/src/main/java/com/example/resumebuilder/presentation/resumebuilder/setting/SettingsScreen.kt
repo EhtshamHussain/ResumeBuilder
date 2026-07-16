@@ -17,23 +17,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
+import com.example.resumebuilder.presentation.shared.presentation.component.topappbar.AppScaffold
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
     navigation: (NavigationAction) -> Unit = {},
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Settings", color = Color(0xFF005EA4)) },
-                navigationIcon = {
-                    IconButton(onClick = { navigation(NavigationAction.PopBackStack) }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-                    }
-                }
-            )
-        }
+    AppScaffold(
+        title = "Settings Screen",
+        navigationIcon = Icons.AutoMirrored.Filled.ArrowBack,
+        onNavigationClick = { navigation(NavigationAction.PopBackStack) }
     ) { paddingValues ->
         Box(
             modifier = Modifier

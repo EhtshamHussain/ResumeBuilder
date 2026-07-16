@@ -1,25 +1,24 @@
 package com.example.resumebuilder.presentation.bottombar.homescreen
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.viewModelScope
 import com.example.resumebuilder.domain.repository.ResumeRepository
 import com.example.resumebuilder.presentation.navigation.Routes
 import com.example.resumebuilder.presentation.shared.extension.vmScopeMain
 import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val resumeRepository: ResumeRepository
 ) : BaseViewModel() {
-
     var state by mutableStateOf(HomeState())
         private set
+    private var hasStartedObserving = false
+
+    init {
+        observeResumes()
+    }
 
     fun onEvent(event: HomeEvent) {
         when (event) {
@@ -43,32 +42,27 @@ class HomeViewModel(
                 deleteResume()
             }
 
-            is HomeEvent.ScreenEntered -> {
-                observeResumes()
-            }
-
             is HomeEvent.ResumeClicked -> {
                 navigate(NavigationAction.NavigateTo(Routes.ResumePreview(resumeId = event.resumeId)))
             }
         }
     }
-
-
-    private fun observeResumes() {
-        state = state.copy(isLoading = true)
-        showLoader()
+    fun observeResumes() = vmScopeMain {
+        if (hasStartedObserving) return@vmScopeMain
+        hasStartedObserving = true
         resumeRepository.getAllResumes()
-            .onEach { resumes ->
-                state = state.copy(isLoading = false, resumes = resumes)
-                hideLoader()
+            .collect { resumes ->
+                state = state.copy(
+                    isLoading = false,
+                    resumes = resumes
+                )
             }
-            .launchIn(viewModelScope)
     }
 
     private fun deleteResume() {
         val resumeId = state.resumeIdPendingDelete ?: return
 
-        vmScopeMain{
+        vmScopeMain {
             resumeRepository.deleteResume(resumeId)
                 .onSuccess {
                     state = state.copy(resumeIdPendingDelete = null)

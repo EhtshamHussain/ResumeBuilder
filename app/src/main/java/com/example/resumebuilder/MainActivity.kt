@@ -17,18 +17,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ResumeBuilderTheme {
-                    val navController = rememberNavController()
+                val navController = rememberNavController()
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = { AppBottomBar(navController = navController) }
-                ){ innerPadding ->
-
+                ) { innerPadding ->
                     AppNavigation(
                         modifier = Modifier.padding(innerPadding),
                         navController = navController
                     )
                 }
-//            previewAbcScreen()
             }
         }
     }

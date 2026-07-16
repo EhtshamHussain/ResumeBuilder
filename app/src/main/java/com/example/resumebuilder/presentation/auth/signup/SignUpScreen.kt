@@ -34,7 +34,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
 import com.example.resumebuilder.R
 import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseScreen
@@ -56,7 +55,6 @@ fun SignUpScreen(
     baseUIEvent: SharedFlow<BaseViewModel.BaseViewModelEvents> = MutableSharedFlow(),
     actionEvent: (SignUpEvent) -> Unit = {},
     navigation: (NavigationAction) -> Unit = {}
-
 ) {
     BaseScreen(
         baseUIEvents = baseUIEvent,
@@ -149,7 +147,6 @@ fun SignUpScreen(
                 Text(it, color = Color.Red, fontSize = 14.sp)
             }
             Spacer(modifier = Modifier.height(15.dp))
-
             var checked by remember { mutableStateOf(false) }
             Row(
                 modifier = Modifier

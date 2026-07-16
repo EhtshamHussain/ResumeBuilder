@@ -5,6 +5,5 @@ data class ResumePreviewState(
     val renderedHtml: String = "",
     val resumeName: String = "",
     val isLoading: Boolean = true,
-//    val isDownloading: Boolean = false,
     val error: String? = null
 )

@@ -1,4 +1,5 @@
 package com.example.resumebuilder.presentation.shared.presentation.base
+
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -22,6 +23,7 @@ import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
 import com.example.resumebuilder.presentation.shared.presentation.theme.AppColors
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.compose
 
 @Composable
 fun BaseScreen(
@@ -31,22 +33,8 @@ fun BaseScreen(
     content: @Composable () -> Unit,
 ) {
     val context = LocalContext.current
-    var showLoader by remember { mutableStateOf(false) }
 
-    Box(
-        modifier = modifier.fillMaxSize()
-    ) {
-
-        content()
-
-        if (showLoader) {
-            CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.Center),
-                color = AppColors.Primary
-            )
-        }
-    }
-
+    content()
     LaunchedEffect(Unit) {
         baseUIEvents.collectLatest { event ->
             when (event) {
@@ -57,12 +45,9 @@ fun BaseScreen(
                 is BaseViewModel.BaseViewModelEvents.Navigate -> {
                     navigation(event.route)
                 }
+
                 is BaseViewModel.BaseViewModelEvents.ShowToast -> {
                     Toast.makeText(context, event.msg, Toast.LENGTH_SHORT).show()
-                }
-                is BaseViewModel.BaseViewModelEvents.ShowLoader -> {
-                    Log.d("BaseScreen", "Loader = ${event.show}")
-                    showLoader = event.show
                 }
             }
         }

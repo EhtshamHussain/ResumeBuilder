@@ -2,6 +2,7 @@ package com.example.resumebuilder.presentation.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
@@ -44,20 +45,16 @@ import org.koin.core.parameter.parametersOf
 
 @Composable
 fun AppNavigation(
-    modifier: Modifier= Modifier,
-    navController : NavHostController = rememberNavController(),
-
-
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController(),
 ) {
-
     val startDestination = Routes.Splash
-
     val context = LocalContext.current
     val sessionManager = SessionManager(context)
-
     NavHost(
-       modifier = modifier.padding(),
-        navController = navController, startDestination = startDestination) {
+        modifier = modifier.padding(),
+        navController = navController, startDestination = startDestination
+    ) {
         composable<Routes.Splash> {
             SplashScreen() {
                 if (sessionManager.isLoggedIn()) {
@@ -66,7 +63,6 @@ fun AppNavigation(
                             inclusive = true
                         }
                     }
-
                 } else if (sessionManager.isOnboardingCompleted()) {
                     navController.navigate(Routes.Login) {
                         popUpTo(0) { inclusive = true }
@@ -79,8 +75,7 @@ fun AppNavigation(
             }
         }
         composable<Routes.Login> {
-            val viewModel : LoginViewModel = koinViewModel()
-
+            val viewModel: LoginViewModel = koinViewModel()
             LoginScreen(
                 baseUiEvent = viewModel.baseUIEvents,
                 navigation = {
@@ -93,9 +88,8 @@ fun AppNavigation(
                 actionEvent = viewModel::onEvent
             )
         }
-
         composable<Routes.SignUp> {
-            val viewModel: SignUpViewModel= koinViewModel()
+            val viewModel: SignUpViewModel = koinViewModel()
             SignUpScreen(
                 baseUIEvent = viewModel.baseUIEvents,
                 navigation = {
@@ -108,7 +102,6 @@ fun AppNavigation(
                 actionEvent = viewModel::onEvent,
             )
         }
-
         composable<Routes.OnboardingWelcomeRoute> {
             OnboardWelcomeScreen(
                 onNextClick = {
@@ -123,46 +116,34 @@ fun AppNavigation(
                 }
             )
         }
-    composable<Routes.OnboardingResumeRoute> {
-        OnboardResumeScreen (
-            onNextClick = {
-                navController.navigate(Routes.OnboardingCareerRoute) {
-                    popUpTo(Routes.Splash) { inclusive = true }
+        composable<Routes.OnboardingResumeRoute> {
+            OnboardResumeScreen(
+                onNextClick = {
+                    navController.navigate(Routes.OnboardingCareerRoute) {
+                        popUpTo(Routes.Splash) { inclusive = true }
+                    }
+                },
+                onSkipClick = {
+                    navController.navigate(Routes.OnboardingCareerRoute) {
+                        popUpTo(Routes.Splash) { inclusive = true }
+                    }
                 }
-            },
-            onSkipClick = {
-                navController.navigate(Routes.OnboardingCareerRoute) {
-                    popUpTo(Routes.Splash) { inclusive = true }
+            )
+        }
+        composable<Routes.OnboardingCareerRoute> {
+            OnboardCareerScreen(
+                onGetStartedClick = {
+                    navController.navigate(Routes.Login) {
+                        popUpTo(Routes.OnboardingCareerRoute) { inclusive = true }
+                    }
+
+                    sessionManager.setOnboardingCompleted()
+                },
+                onBackClick = {
+                    navController.popBackStack()
                 }
-            }
-        )
-
-    }
-    composable<Routes.OnboardingCareerRoute> {
-
-        OnboardCareerScreen(
-            onGetStartedClick = {
-
-                navController.navigate(Routes.Login) {
-                    popUpTo(Routes.OnboardingCareerRoute) { inclusive = true }
-                }
-
-                sessionManager.setOnboardingCompleted()
-            },
-            onBackClick = {
-                 navController.popBackStack()
-            }
-        )
-
-    }
-
-
-//
-//        composable<Routes.MainScreen> {
-//            MainScreen()
-//        }
-
-
+            )
+        }
         composable<BottomBarScreens.Home> {
             val viewModel = koinViewModel<HomeViewModel>()
             HomeScreen(
@@ -199,10 +180,8 @@ fun AppNavigation(
                 state = viewModel.state,
                 actionEvent = viewModel::onEvent,
                 baseUiEvent = viewModel.baseUIEvents,
-                navigation = {handleNavigation(it , navController)}
-
+                navigation = { handleNavigation(it, navController) }
             )
-
         }
 
         composable<Routes.ExperienceEducation> {
@@ -237,7 +216,8 @@ fun AppNavigation(
 
         composable<Routes.TemplateSelect> { backStackEntry ->
             val route: Routes.TemplateSelect = backStackEntry.toRoute()
-            val viewModel: TemplateSelectViewModel = koinViewModel { parametersOf(route.existingResumeId) }
+            val viewModel: TemplateSelectViewModel =
+                koinViewModel { parametersOf(route.existingResumeId) }
 
             TemplateSelectScreen(
                 state = viewModel.state,
@@ -246,16 +226,11 @@ fun AppNavigation(
                 navigation = { handleNavigation(it, navController) }
             )
         }
-
         /*** 500kb size of data ( Bundle and Intent Data ) conceptually limited to 1 MB
-         Exceeding this limit crashes your app with a TransactionTooLargeException ***/
-
+        Exceeding this limit crashes your app with a TransactionTooLargeException ***/
         composable<Routes.ResumePreview> { backStackEntry ->
             val route: Routes.ResumePreview = backStackEntry.toRoute()
-//            val rid = route.rid
-//            val resumeId = route.resumeId
             val viewModel: ResumePreviewViewModel = koinViewModel { parametersOf(route.resumeId) }
-
             ResumePreviewScreen(
                 state = viewModel.state,
                 actionEvent = viewModel::onEvent,
@@ -263,16 +238,13 @@ fun AppNavigation(
                 navigation = { handleNavigation(it, navController) }
             )
         }
-
         composable<Routes.Settings> {
             SettingsScreen(
                 navigation = { handleNavigation(it, navController) }
             )
         }
-
     }
 }
-
 
 //enterTransition = { slideInHorizontally(initialOffsetX = { 1000 }) }, // Right side sliding entry
 //exitTransition = { slideOutHorizontally(targetOffsetX = { -1000 }) }

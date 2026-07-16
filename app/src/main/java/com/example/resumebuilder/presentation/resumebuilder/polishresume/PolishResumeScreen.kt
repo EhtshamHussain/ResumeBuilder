@@ -40,12 +40,14 @@ import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseScreen
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewModel
 import com.example.resumebuilder.presentation.shared.presentation.component.labels.LabelText
+import com.example.resumebuilder.presentation.shared.presentation.component.linearprogressindicator.LinearProgressBar
+import com.example.resumebuilder.presentation.shared.presentation.component.topappbar.AppScaffold
 import com.example.resumebuilder.screens.CustomButton
 import com.example.resumebuilder.screens.CustomTextField
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 
-@Preview(showBackground = true , showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = true)
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun PolishResumeScreen(
@@ -54,27 +56,15 @@ fun PolishResumeScreen(
     navigation: (NavigationAction) -> Unit = {},
     actionEvent: (PolishResumeEvent) -> Unit = {},
 ) {
-    LaunchedEffect(Unit) {
-        actionEvent(PolishResumeEvent.ScreenEntered)
-    }
-
     BaseScreen(
         baseUIEvents = baseUiEvent,
         navigation = navigation
     ) {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text("CareerSync AI", color = Color(0xFF005EA4), fontSize = 18.sp) },
-                    navigationIcon = {
-                        IconButton(onClick = { navigation(NavigationAction.PopBackStack) }) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-                        }
-                    }
-                )
-            }
+        AppScaffold(
+            title = "Polish Your Resume",
+            navigationIcon = Icons.AutoMirrored.Filled.ArrowBack,
+            onNavigationClick = { navigation(NavigationAction.PopBackStack) }
         ) { paddingValues ->
-
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -82,7 +72,6 @@ fun PolishResumeScreen(
                     .padding(horizontal = 20.dp)
                     .verticalScroll(rememberScrollState())
             ) {
-
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(text = "STEP 4 OF 4", fontSize = 12.sp, color = Color(0xFF005EA4))
                 Spacer(modifier = Modifier.height(4.dp))
@@ -95,11 +84,8 @@ fun PolishResumeScreen(
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
-                LinearProgressIndicator(
-                    progress = { 1f },
-                    modifier = Modifier.fillMaxWidth(),
-                    color = Color(0xFF005EA4)
-                )
+                LinearProgressBar(progress = 1f)
+
 
                 Spacer(modifier = Modifier.height(24.dp))
                 Text(text = "Languages", fontSize = 16.sp, color = Color(0xFF005EA4))
@@ -153,20 +139,13 @@ fun PolishResumeScreen(
                     onAddClick = { actionEvent(PolishResumeEvent.AddAchievementClicked) }
                 )
                 Spacer(modifier = Modifier.height(10.dp))
-                // Achievements ek list ki tarah dikhaye — chips ki jagah bullet points
-                Column {
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
                     state.achievements.forEach { achievement ->
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(text = "• $achievement", fontSize = 14.sp, modifier = Modifier.weight(1f))
-                            IconButton(onClick = {
-                                actionEvent(PolishResumeEvent.RemoveAchievement(achievement))
-                            }) {
-                                Icon(Icons.Filled.Close, contentDescription = "Remove", tint = Color.Red)
-                            }
+                        RemovableChip(text = achievement) {
+                            actionEvent(PolishResumeEvent.RemoveAchievement(achievement))
                         }
                     }
                 }
@@ -217,7 +196,13 @@ fun PolishResumeScreen(
                     }
                     Switch(
                         checked = state.includeReferences,
-                        onCheckedChange = { actionEvent(PolishResumeEvent.IncludeReferencesToggled(it)) }
+                        onCheckedChange = {
+                            actionEvent(
+                                PolishResumeEvent.IncludeReferencesToggled(
+                                    it
+                                )
+                            )
+                        }
                     )
                 }
 
@@ -257,9 +242,6 @@ fun PolishResumeScreen(
         }
     }
 }
-
-// Reusable row — TextField + Add ("+") icon button
-// Languages, Interests, aur Achievements teeno isi ek composable ko reuse karte hain
 @Composable
 private fun ChipInputRow(
     value: String,
@@ -287,8 +269,6 @@ private fun ChipInputRow(
         }
     }
 }
-
-// Reusable chip jisme "x" icon ho remove karne ke liye
 @Composable
 private fun RemovableChip(text: String, onRemove: () -> Unit) {
     SuggestionChip(

@@ -13,17 +13,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -34,11 +28,13 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseScreen
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewModel
+import com.example.resumebuilder.presentation.shared.presentation.component.circularbar.CircularProgress
+import com.example.resumebuilder.presentation.shared.presentation.component.topappbar.AppScaffold
 import com.example.resumebuilder.screens.CustomButton
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 
-@Preview(showBackground = true , showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = true)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ResumePreviewScreen(
@@ -48,13 +44,7 @@ fun ResumePreviewScreen(
     actionEvent: (ResumePreviewEvent) -> Unit = {},
 ) {
     val context = LocalContext.current
-
-
     val webView = remember { WebView(context) }
-
-    LaunchedEffect(Unit) {
-        actionEvent(ResumePreviewEvent.ScreenEntered)
-    }
 
     LaunchedEffect(state.renderedHtml) {
         if (state.renderedHtml.isNotBlank()) {
@@ -66,43 +56,23 @@ fun ResumePreviewScreen(
         baseUIEvents = baseUiEvent,
         navigation = navigation
     ) {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = state.resumeName.ifBlank { "Resume Preview" },
-                            fontSize = 16.sp,
-                            color = Color(0xFF005EA4)
-                        )
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = { navigation(NavigationAction.PopBackStack) }) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-                        }
-                    }
-                )
-            }
+        AppScaffold(
+            title = state.resumeName,
+            navigationIcon = Icons.AutoMirrored.Filled.ArrowBack,
+            onNavigationClick = { navigation(NavigationAction.PopBackStack) }
         ) { paddingValues ->
-
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
             ) {
-
                 Box(
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth()
                 ) {
                     if (state.isLoading) {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator(color = Color(0xFF005EA4))
-                        }
+                        CircularProgress()
                     } else {
                         AndroidView(
                             factory = {
@@ -115,7 +85,6 @@ fun ResumePreviewScreen(
                         )
                     }
                 }
-
                 state.error?.let { error ->
                     Text(
                         text = error,
@@ -124,7 +93,6 @@ fun ResumePreviewScreen(
                         modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)
                     )
                 }
-
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -141,8 +109,6 @@ fun ResumePreviewScreen(
                     CustomButton(
                         onClick = {
                             actionEvent(ResumePreviewEvent.DownloadPdfClicked)
-                            // System print/save dialog yahan trigger hota hai —
-                            // isi WebView object se jo already HTML load kar chuka hai
                             printWebViewAsPdf(
                                 context = context,
                                 webView = webView,

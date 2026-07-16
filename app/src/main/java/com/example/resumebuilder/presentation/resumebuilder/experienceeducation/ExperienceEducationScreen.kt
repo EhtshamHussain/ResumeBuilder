@@ -1,5 +1,6 @@
 package com.example.resumebuilder.presentation.resumebuilder.experienceeducation
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,15 +23,10 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,12 +37,14 @@ import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseScreen
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewModel
 import com.example.resumebuilder.presentation.shared.presentation.component.labels.LabelText
+import com.example.resumebuilder.presentation.shared.presentation.component.linearprogressindicator.LinearProgressBar
+import com.example.resumebuilder.presentation.shared.presentation.component.topappbar.AppScaffold
 import com.example.resumebuilder.screens.CustomButton
 import com.example.resumebuilder.screens.CustomTextField
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 
-@Preview(showBackground = true , showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = true)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExperienceEducationScreen(
@@ -55,27 +53,18 @@ fun ExperienceEducationScreen(
     navigation: (NavigationAction) -> Unit = {},
     actionEvent: (ExperienceEducationEvent) -> Unit = {},
 ) {
-    LaunchedEffect(Unit) {
-        actionEvent(ExperienceEducationEvent.ScreenEntered)
-    }
-
     BaseScreen(
         baseUIEvents = baseUiEvent,
         navigation = navigation
     ) {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text("CareerSync AI", color = Color(0xFF005EA4), fontSize = 18.sp) },
-                    navigationIcon = {
-                        IconButton(onClick = { navigation(NavigationAction.PopBackStack) }) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-                        }
-                    }
-                )
+        AppScaffold(
+            title = "Experience & Education",
+            navigationIcon = Icons.AutoMirrored.Filled.ArrowBack,
+            onNavigationClick = {
+                Log.d("BackDebug", "Back icon clicked!")
+                navigation(NavigationAction.PopBackStack)
             }
         ) { paddingValues ->
-
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -83,7 +72,6 @@ fun ExperienceEducationScreen(
                     .padding(horizontal = 20.dp)
                     .verticalScroll(rememberScrollState())
             ) {
-
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(text = "STEP 2 OF 4", fontSize = 12.sp, color = Color(0xFF005EA4))
                 Spacer(modifier = Modifier.height(4.dp))
@@ -96,17 +84,12 @@ fun ExperienceEducationScreen(
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
-                LinearProgressIndicator(
-                    progress = { 0.5f },
-                    modifier = Modifier.fillMaxWidth(),
-                    color = Color(0xFF005EA4)
-                )
+                LinearProgressBar(progress = 0.5f)
 
                 Spacer(modifier = Modifier.height(20.dp))
                 Text(text = "Work Experience", fontSize = 16.sp, color = Color(0xFF005EA4))
                 Spacer(modifier = Modifier.height(12.dp))
 
-                // Har WorkExperience entry ke liye ek card render karo
                 state.workExperiences.forEach { experience ->
                     WorkExperienceCard(
                         experience = experience,
@@ -183,9 +166,6 @@ fun ExperienceEducationScreen(
         }
     }
 }
-
-// Alag composable banaya — taake ExperienceEducationScreen readable rahe
-// aur ye card independently reusable/testable ho
 @Composable
 private fun WorkExperienceCard(
     experience: WorkExperience,
@@ -197,14 +177,12 @@ private fun WorkExperienceCard(
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                LabelText("COMPANY" , modifier = Modifier.fillMaxWidth(.5f))
-//                Text(text = "COMPANY", fontSize = 12.sp, color = Color.Gray)
+                LabelText(text = "COMPANY", modifier = Modifier.fillMaxWidth(.5f))
                 IconButton(onClick = {
                     actionEvent(ExperienceEducationEvent.RemoveWorkExperience(experience.id))
                 }) {
@@ -234,32 +212,27 @@ private fun WorkExperienceCard(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-//            Row(modifier = Modifier.fillMaxWidth()) {
-//                Column(modifier = Modifier.weight(1f)) {
-                    LabelText(text = "START DATE")
-                    CustomTextField(
-                        value = experience.startDate,
-                        onValueChange = {
-                            actionEvent(ExperienceEducationEvent.WorkStartDateChanged(experience.id, it))
-                        },
-                        placeholder = "MM/YYYY",
-                        modifier = Modifier.fillMaxWidth()
-                    )
-//                }
-                Spacer(modifier = Modifier.height(10.dp))
-//                Column(modifier = Modifier.weight(1f)) {
-                    LabelText(text = "END DATE")
-                    CustomTextField(
-                        value = experience.endDate,
-                        onValueChange = {
-                            actionEvent(ExperienceEducationEvent.WorkEndDateChanged(experience.id, it))
-                        },
-                        placeholder = "MM/YYYY",
-                        modifier = Modifier.fillMaxWidth()
-                    )
-//                }
-//            }
+            LabelText(text = "START DATE")
+            CustomTextField(
+                value = experience.startDate,
+                onValueChange = {
+                    actionEvent(ExperienceEducationEvent.WorkStartDateChanged(experience.id, it))
+                },
+                placeholder = "MM/YYYY",
+                modifier = Modifier.fillMaxWidth()
+            )
 
+            Spacer(modifier = Modifier.height(10.dp))
+
+            LabelText(text = "END DATE")
+            CustomTextField(
+                value = experience.endDate,
+                onValueChange = {
+                    actionEvent(ExperienceEducationEvent.WorkEndDateChanged(experience.id, it))
+                },
+                placeholder = "MM/YYYY",
+                modifier = Modifier.fillMaxWidth()
+            )
             Spacer(modifier = Modifier.height(10.dp))
             LabelText(text = "KEY RESPONSIBILITIES")
             CustomTextField(
@@ -273,7 +246,6 @@ private fun WorkExperienceCard(
         }
     }
 }
-
 @Composable
 private fun EducationCard(
     education: Education,
@@ -285,7 +257,6 @@ private fun EducationCard(
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -327,7 +298,12 @@ private fun EducationCard(
                     CustomTextField(
                         value = education.startDate,
                         onValueChange = {
-                            actionEvent(ExperienceEducationEvent.EduStartDateChanged(education.id, it))
+                            actionEvent(
+                                ExperienceEducationEvent.EduStartDateChanged(
+                                    education.id,
+                                    it
+                                )
+                            )
                         },
                         placeholder = "MM/YYYY",
                         modifier = Modifier.fillMaxWidth()
@@ -339,7 +315,12 @@ private fun EducationCard(
                     CustomTextField(
                         value = education.graduationDate,
                         onValueChange = {
-                            actionEvent(ExperienceEducationEvent.GraduationDateChanged(education.id, it))
+                            actionEvent(
+                                ExperienceEducationEvent.GraduationDateChanged(
+                                    education.id,
+                                    it
+                                )
+                            )
                         },
                         placeholder = "MM/YYYY",
                         modifier = Modifier.fillMaxWidth()
@@ -349,3 +330,4 @@ private fun EducationCard(
         }
     }
 }
+

@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 
     id("com.google.devtools.ksp")
-
 }
 
 android {
@@ -53,40 +52,23 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
-
-
-
-
     implementation("androidx.compose.material:material-icons-extended")
-
     val nav_version = "2.9.8"
-
     // Jetpack Compose integration
     implementation("androidx.navigation:navigation-compose:$nav_version")
-
     // JSON serialization library, works with the Kotlin serialization plugin
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
-
-
     // Koin core features ke liye (Kotlin setup)
     implementation("io.insert-koin:koin-android:4.2.2")
-
     // Jetpack Compose ke sath connect karne ke liye
     implementation("io.insert-koin:koin-androidx-compose:4.2.2")
-
     //Room
     //room room
     val room_version = "2.8.4"
-
     implementation("androidx.room:room-runtime:2.8.4")
     ksp("androidx.room:room-compiler:2.8.4")
-
     //for coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
-
-
-
     implementation("com.google.code.gson:gson:2.14.0")
     implementation("com.github.spullara.mustache.java:compiler:0.9.14")
-
 }

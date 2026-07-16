@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
@@ -46,13 +47,14 @@ import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseScreen
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewModel
 import com.example.resumebuilder.presentation.shared.presentation.component.labels.LabelText
+import com.example.resumebuilder.presentation.shared.presentation.component.linearprogressindicator.LinearProgressBar
+import com.example.resumebuilder.presentation.shared.presentation.component.topappbar.AppScaffold
 import com.example.resumebuilder.screens.CustomButton
 import com.example.resumebuilder.screens.CustomTextField
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 
-
-@Preview(showBackground = true , showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = true)
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun SkillsProjectsScreen(
@@ -61,27 +63,15 @@ fun SkillsProjectsScreen(
     navigation: (NavigationAction) -> Unit = {},
     actionEvent: (SkillsProjectsEvent) -> Unit = {},
 ) {
-    LaunchedEffect(Unit) {
-        actionEvent(SkillsProjectsEvent.ScreenEntered)
-    }
-
     BaseScreen(
         baseUIEvents = baseUiEvent,
         navigation = navigation
     ) {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text("CareerSync AI", color = Color(0xFF005EA4), fontSize = 18.sp) },
-                    navigationIcon = {
-                        IconButton(onClick = { navigation(NavigationAction.PopBackStack) }) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-                        }
-                    }
-                )
-            }
+        AppScaffold(
+            title = "Skills & Projects",
+            navigationIcon = Icons.AutoMirrored.Filled.ArrowBack,
+            onNavigationClick = { navigation(NavigationAction.PopBackStack) }
         ) { paddingValues ->
-
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -89,12 +79,12 @@ fun SkillsProjectsScreen(
                     .padding(horizontal = 20.dp)
                     .verticalScroll(rememberScrollState())
             ) {
-
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(text = "STEP 3 OF 4", fontSize = 12.sp, color = Color(0xFF005EA4))
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(text = "Skills & Projects", fontSize = 22.sp)
                 Spacer(modifier = Modifier.height(4.dp))
+
                 Text(
                     text = "Highlight your technical expertise and showcase the real-world impact of your work through projects and certifications.",
                     fontSize = 13.sp,
@@ -102,17 +92,13 @@ fun SkillsProjectsScreen(
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
-                LinearProgressIndicator(
-                    progress = { 0.75f },
-                    modifier = Modifier.fillMaxWidth(),
-                    color = Color(0xFF005EA4)
-                )
+                LinearProgressBar(0.75f)
+
 
                 Spacer(modifier = Modifier.height(24.dp))
                 Text(text = "Skills", fontSize = 16.sp, color = Color(0xFF005EA4))
                 Spacer(modifier = Modifier.height(10.dp))
 
-                // Skill input + Add button ek Row mein
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
@@ -137,8 +123,6 @@ fun SkillsProjectsScreen(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                // FlowRow — chips ko wrap karta hai next line pa agar row mein jagah na bache
-                // (jese Image 3 mein React.js, Machine Learning, Agile chips dikh rahe hain)
                 FlowRow(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -230,7 +214,6 @@ fun SkillsProjectsScreen(
         }
     }
 }
-
 @Composable
 private fun ProjectCard(
     project: Project,
@@ -241,8 +224,7 @@ private fun ProjectCard(
         colors = CardDefaults.cardColors(containerColor = Color(0xFFF9FAFB)),
         shape = RoundedCornerShape(12.dp)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-
+        Column(modifier = Modifier.padding(12.dp)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -289,7 +271,6 @@ private fun ProjectCard(
         }
     }
 }
-
 @Composable
 private fun CertificationCard(
     certification: Certification,
@@ -301,7 +282,6 @@ private fun CertificationCard(
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -329,7 +309,12 @@ private fun CertificationCard(
             CustomTextField(
                 value = certification.issuer,
                 onValueChange = {
-                    actionEvent(SkillsProjectsEvent.CertificationIssuerChanged(certification.id, it))
+                    actionEvent(
+                        SkillsProjectsEvent.CertificationIssuerChanged(
+                            certification.id,
+                            it
+                        )
+                    )
                 },
                 placeholder = "e.g. Amazon Web Services",
                 modifier = Modifier.fillMaxWidth()

@@ -1,5 +1,4 @@
-    package com.example.resumebuilder.presentation.splash
-
+package com.example.resumebuilder.presentation.splash
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
@@ -36,19 +35,19 @@ import androidx.compose.ui.unit.sp
 import com.example.resumebuilder.R
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
-@Preview(showBackground = true , showSystemUi = true)
+
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun SplashScreen(
-    onNavigate: () -> Unit={}
+    onNavigate: () -> Unit = {}
 ) {
     val alpha = remember { Animatable(0f) }
     val scale = remember { Animatable(0.8f) }
 
     LaunchedEffect(Unit) {
-        delay(2000.milliseconds)
         alpha.animateTo(1f, animationSpec = tween(1500))
-        scale.animateTo(1.5f , animationSpec = tween(2000) )
-        scale.animateTo(1f , animationSpec = tween(2000) )
+        scale.animateTo(1.5f, animationSpec = tween(1500))
+        scale.animateTo(1f, animationSpec = tween(1500))
         alpha.animateTo(0f, animationSpec = tween(1500))
         delay(1000.milliseconds)
         onNavigate()
@@ -60,8 +59,8 @@ fun SplashScreen(
             .background(
                 Brush.verticalGradient(
                     colors = listOf(
-                        Color(0xFF6B8A9E), // Lighter blue at top
-                        Color(0xFF1D4461)  // Darker blue at bottom
+                        Color(0xFF6B8A9E),
+                        Color(0xFF1D4461)
                     )
                 )
             ),
@@ -89,7 +88,7 @@ fun SplashScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
-                            painter = painterResource(R.drawable.logo),
+                        painter = painterResource(R.drawable.logo),
                         contentDescription = "App Logo",
                         modifier = Modifier.size(100.dp)
                     )
@@ -115,8 +114,6 @@ fun SplashScreen(
             )
         }
 
-        // Bottom section
-
         HorizontalDivider(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -125,6 +122,5 @@ fun SplashScreen(
             thickness = 3.dp,
             color = Color.White.copy(alpha = 0.4f)
         )
-
     }
 }

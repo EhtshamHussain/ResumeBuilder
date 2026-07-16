@@ -5,7 +5,6 @@ import com.example.resumebuilder.domain.model.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 object ResumeMapper {
-
     private val gson = Gson()
     fun draftToEntity(
         draft: ResumeDraft,
@@ -34,8 +33,6 @@ object ResumeMapper {
             selectedTemplateId = draft.selectedTemplateId
         )
     }
-
-    // Fetch karte waqt: ResumeEntity (JSON strings) ko wapas SavedResume (Lists) mein convert karo
     fun entityToDomain(entity: ResumeEntity): SavedResume {
         val draft = ResumeDraft(
             fullName = entity.fullName,
@@ -44,7 +41,6 @@ object ResumeMapper {
             phoneNumber = entity.phoneNumber,
             currentLocation = entity.currentLocation,
             professionalSummary = entity.professionalSummary,
-//            Type Erasure
             workExperiences = gson.fromJson(
                 entity.workExperiencesJson,
                 object : TypeToken<List<WorkExperience>>() {}.type
@@ -83,7 +79,6 @@ object ResumeMapper {
             includeReferences = entity.includeReferences,
             selectedTemplateId = entity.selectedTemplateId
         )
-
         return SavedResume(
             id = entity.id,
             resumeName = entity.resumeName,

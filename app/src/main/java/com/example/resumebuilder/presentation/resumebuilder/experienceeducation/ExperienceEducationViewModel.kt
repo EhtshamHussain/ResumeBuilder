@@ -1,9 +1,14 @@
 package com.example.resumebuilder.presentation.resumebuilder.experienceeducation
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewModelScope
+import androidx.room.util.TableInfo
 import com.example.resumebuilder.domain.model.Education
 import com.example.resumebuilder.domain.model.WorkExperience
 import com.example.resumebuilder.domain.repository.ResumeDraftRepository
@@ -11,29 +16,28 @@ import com.example.resumebuilder.presentation.navigation.Routes
 import com.example.resumebuilder.presentation.shared.extension.vmScopeMain
 import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewModel
+import com.example.resumebuilder.screens.CustomButton
 import kotlinx.coroutines.launch
 import java.util.UUID
 
 class ExperienceEducationViewModel(
     private val resumeDraftRepository: ResumeDraftRepository
 ) : BaseViewModel() {
-
     var state by mutableStateOf(ExperienceEducationState())
         private set
 
+    init {
+        loadExistingDraft()
+    }
+
     fun onEvent(event: ExperienceEducationEvent) {
         when (event) {
-            is ExperienceEducationEvent.ScreenEntered -> loadExistingDraft()
-
-            // ---- Work Experience ----
             is ExperienceEducationEvent.AddWorkExperienceClicked -> {
-                // UUID.randomUUID() se ek unique id banti hai har naye entry ke liye
                 val newEntry = WorkExperience(id = UUID.randomUUID().toString())
                 state = state.copy(workExperiences = state.workExperiences + newEntry)
             }
 
             is ExperienceEducationEvent.RemoveWorkExperience -> {
-                // sirf wahi item list se hataya jiska id match hua
                 state = state.copy(
                     workExperiences = state.workExperiences.filter { it.id != event.id }
                 )
@@ -59,7 +63,6 @@ class ExperienceEducationViewModel(
                 updateWorkExperience(event.id) { it.copy(responsibilities = event.value) }
             }
 
-            // ---- Education ----
             is ExperienceEducationEvent.AddEducationClicked -> {
                 val newEntry = Education(id = UUID.randomUUID().toString())
                 state = state.copy(educations = state.educations + newEntry)
@@ -98,8 +101,6 @@ class ExperienceEducationViewModel(
         }
     }
 
-    // Helper function — list mein sirf matching id wale item ko update karta hai,
-    // baaki sab list waise ki waise rehti hai. Ye repetition kam karta hai (DRY principle).
     private fun updateWorkExperience(id: String, update: (WorkExperience) -> WorkExperience) {
         state = state.copy(
             workExperiences = state.workExperiences.map { entry ->

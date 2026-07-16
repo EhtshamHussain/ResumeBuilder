@@ -1,7 +1,4 @@
 package com.example.resumebuilder.domain.model
-
-
-
 data class SavedResume(
     val id: Long,
     val resumeName: String,

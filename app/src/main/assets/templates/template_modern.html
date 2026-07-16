@@ -170,9 +170,15 @@
         <p class="sidebar-contact-item">{{email}}</p>
         <p class="sidebar-contact-item">{{phoneNumber}}</p>
         <p class="sidebar-contact-item">{{currentLocation}}</p>
-        {{#hasLinkedIn}}<p class="sidebar-contact-item"><a href="{{linkedInUrl}}" style="color:#8FB4D9;">LinkedIn</a></p>{{/hasLinkedIn}}
-        {{#hasGithub}}<p class="sidebar-contact-item"><a href="{{githubUrl}}" style="color:#8FB4D9;">GitHub</a></p>{{/hasGithub}}
-        {{#hasPortfolio}}<p class="sidebar-contact-item"><a href="{{portfolioUrl}}" style="color:#8FB4D9;">Portfolio</a></p>{{/hasPortfolio}}
+        {{#hasLinkedIn}}<p class="sidebar-contact-item"><a href="{{linkedInUrl}}"
+                                                           style="color:#8FB4D9;">LinkedIn</a></p>
+        {{/hasLinkedIn}}
+        {{#hasGithub}}<p class="sidebar-contact-item"><a href="{{githubUrl}}"
+                                                         style="color:#8FB4D9;">GitHub</a></p>
+        {{/hasGithub}}
+        {{#hasPortfolio}}<p class="sidebar-contact-item"><a href="{{portfolioUrl}}"
+                                                            style="color:#8FB4D9;">Portfolio</a></p>
+        {{/hasPortfolio}}
 
         <div class="sidebar-section-title">Skills</div>
         {{#skills}}<span class="sidebar-skill-chip">{{value}}</span>{{/skills}}
@@ -223,7 +229,9 @@
         <div class="entry">
             <div class="entry-role">{{title}}</div>
             <div class="entry-description">{{description}}</div>
-            {{#link}}<div class="project-link"><a href="{{link}}">{{link}}</a></div>{{/link}}
+            {{#link}}
+            <div class="project-link"><a href="{{link}}">{{link}}</a></div>
+            {{/link}}
         </div>
         {{/projects}}
         {{/hasProjects}}
@@ -244,7 +252,9 @@
         {{#hasAchievements}}
         <div class="main-section-title">Achievements</div>
         <ul style="font-size:12.5px; color:#555555; padding-left:18px; margin:0;">
-            {{#achievements}}<li>{{value}}</li>{{/achievements}}
+            {{#achievements}}
+            <li>{{value}}</li>
+            {{/achievements}}
         </ul>
         {{/hasAchievements}}
 

@@ -22,7 +22,6 @@ enum class ResumeTemplate(
         description = "Ideal for executive and corporate positions",
         htmlAssetFileName = "template_professional.html",
         img = R.drawable.prfessionalresumetemplate
-
     ),
     MINIMAL(
         id = "minimal",
@@ -38,9 +37,7 @@ enum class ResumeTemplate(
         htmlAssetFileName = "template_ats_friendly.html",
         img = R.drawable.atsresumetemplate
     );
-
     companion object {
-
         fun fromId(id: String): ResumeTemplate {
             return entries.find { it.id == id } ?: MODERN
         }

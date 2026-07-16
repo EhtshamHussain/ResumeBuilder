@@ -32,7 +32,6 @@ import com.example.resumebuilder.screens.CustomTextField
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import org.koin.androidx.compose.koinViewModel
-
 @Preview(
     showBackground = true,
     showSystemUi = true
@@ -48,21 +47,20 @@ fun LoginScreen(
         baseUIEvents = baseUiEvent,
         navigation = navigation
     ) {
-
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-
-            Image(painter = painterResource(R.drawable.auth_screen_logo), contentDescription = null)
+            Image(
+                painter = painterResource(R.drawable.auth_screen_logo),
+                contentDescription = null
+            )
             Spacer(modifier = Modifier.height(10.dp))
             Text(text = "Welcome Back", fontSize = 32.sp)
             Spacer(modifier = Modifier.height(5.dp))
             Text(text = "Sign in to continue your career journey ", fontSize = 16.sp)
-
             Spacer(modifier = Modifier.height(25.dp))
-
             LabelText(
                 text = "Email Address", modifier = Modifier
                     .fillMaxWidth()
@@ -74,10 +72,7 @@ fun LoginScreen(
                 trailingIcon = Icons.Default.Email,
                 modifier = Modifier.fillMaxWidth(.9f)
             )
-
-
             Spacer(modifier = Modifier.height(25.dp))
-
             LabelText(
                 text = "Password",
                 modifier = Modifier
@@ -90,15 +85,11 @@ fun LoginScreen(
                 isPassword = true,
                 modifier = Modifier.fillMaxWidth(.9f)
             )
-
-
             Spacer(modifier = Modifier.height(35.dp))
-
             state.error?.let { error ->
                 Text(text = error, color = Color.Red, fontSize = 14.sp)
             }
             Spacer(modifier = Modifier.height(35.dp))
-
             CustomButton(
                 onClick = {
                     actionEvent(LoginEvent.LoginClicked)
@@ -109,7 +100,6 @@ fun LoginScreen(
                 contentColor = Color.White,
                 containerColor = Color(0xFF005EA4)
             )
-
             Spacer(modifier = Modifier.height(35.dp))
             OrDivider()
             Spacer(modifier = Modifier.height(35.dp))
@@ -119,7 +109,6 @@ fun LoginScreen(
                 modifier = Modifier.fillMaxWidth(.9f),
                 contentColor = Color(0xFF005EA4)
             )
-
         }
     }
 }

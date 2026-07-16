@@ -16,11 +16,13 @@ import androidx.compose.ui.unit.sp
 )
 @Composable
 fun LabelText(
-    text:String ="",
+    modifier: Modifier = Modifier,
+    text: String = "",
     textAlign: TextAlign = TextAlign.Start,
-    modifier: Modifier = Modifier.fillMaxWidth()
 ) {
-    Text(text , fontWeight = FontWeight.W500 , fontSize = 24.sp,
-    modifier = modifier , textAlign = textAlign)
+    Text(
+        text, fontWeight = FontWeight.W500, fontSize = 24.sp,
+        modifier = modifier, textAlign = textAlign
+    )
 }
 

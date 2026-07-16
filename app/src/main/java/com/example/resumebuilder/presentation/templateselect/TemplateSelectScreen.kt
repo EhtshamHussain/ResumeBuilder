@@ -16,7 +16,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -36,7 +35,11 @@ import com.example.resumebuilder.domain.model.ResumeTemplate
 import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseScreen
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewModel
+import com.example.resumebuilder.presentation.shared.presentation.component.circularbar.CircularProgress
+import com.example.resumebuilder.presentation.shared.presentation.component.topappbar.AppScaffold
 import com.example.resumebuilder.screens.CustomButton
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 
@@ -53,26 +56,17 @@ fun TemplateSelectScreen(
         baseUIEvents = baseUiEvent,
         navigation = navigation
     ) {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text("Choose Template", color = Color(0xFF005EA4), fontSize = 18.sp) },
-                    navigationIcon = {
-                        IconButton(onClick = { navigation(NavigationAction.PopBackStack) }) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-                        }
-                    }
-                )
-            }
+        AppScaffold(
+            title = "Choose Template",
+            navigationIcon = Icons.AutoMirrored.Filled.ArrowBack,
+            onNavigationClick = { navigation(NavigationAction.PopBackStack) }
         ) { paddingValues ->
-
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
                     .padding(horizontal = 20.dp)
             ) {
-
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(text = "Build your path to success.", fontSize = 22.sp)
                 Spacer(modifier = Modifier.height(4.dp))
@@ -90,13 +84,11 @@ fun TemplateSelectScreen(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        CircularProgressIndicator(color = Color(0xFF005EA4))
+                        CircularProgress()
                         Spacer(modifier = Modifier.height(12.dp))
                         Text(text = "Saving your resume...", fontSize = 14.sp, color = Color.Gray)
                     }
                 } else {
-                    // 2 columns ki grid — jese Image 5 mein Modern/Professional aik row,
-                    // Minimal/ATS-Friendly doosri row mein hain
                     LazyVerticalGrid(
                         columns = GridCells.Fixed(2),
                         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -112,19 +104,16 @@ fun TemplateSelectScreen(
                             )
                         }
                     }
-
                     state.error?.let { error ->
                         Spacer(modifier = Modifier.height(12.dp))
                         Text(text = error, color = Color.Red, fontSize = 14.sp)
                     }
                 }
-
                 Spacer(modifier = Modifier.height(20.dp))
             }
         }
     }
 }
-
 @Composable
 private fun TemplateCard(
     template: ResumeTemplate,
@@ -139,19 +128,17 @@ private fun TemplateCard(
             modifier = Modifier.padding(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Simple placeholder box — asli app mein yahan template ka thumbnail image aayega
-            // (drawable resource se painterResource use kar sakte ho jab thumbnails ban jayen)
             Card(
                 modifier = Modifier
-                    .fillMaxSize()
-                    ,
+                    .fillMaxSize(),
                 colors = CardDefaults.cardColors(containerColor = Color(0xFFE8F0F7)),
                 shape = RoundedCornerShape(8.dp)
             ) {
-                Image(painter = painterResource(template.img),contentDescription = null,
-                    contentScale = ContentScale.Crop)
+                Image(
+                    painter = painterResource(template.img), contentDescription = null,
+                    contentScale = ContentScale.Crop
+                )
             }
-
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = template.displayName, fontSize = 15.sp, color = Color.Black)
             Spacer(modifier = Modifier.height(2.dp))
@@ -162,7 +149,6 @@ private fun TemplateCard(
                 textAlign = androidx.compose.ui.text.style.TextAlign.Center
             )
             Spacer(modifier = Modifier.height(10.dp))
-
             CustomButton(
                 onClick = onSelectClick,
                 text = "Select",

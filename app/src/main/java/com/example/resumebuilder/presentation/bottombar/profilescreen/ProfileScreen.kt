@@ -1,6 +1,5 @@
 package com.example.resumebuilder.presentation.bottombar.profilescreen
 
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -78,10 +77,7 @@ fun ProfileScreen(
                 .padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Spacer(modifier = Modifier.height(24.dp))
-
-            // ===== AVATAR (koi image nahi — sirf circular placeholder icon) =====
             Box(
                 modifier = Modifier
                     .size(88.dp)
@@ -99,7 +95,6 @@ fun ProfileScreen(
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // ===== NAME + EMAIL =====
             Text(
                 text = state.name,
                 fontSize = 20.sp,
@@ -114,8 +109,6 @@ fun ProfileScreen(
             )
 
             Spacer(modifier = Modifier.height(10.dp))
-
-            // ===== "Premium Member" chip (hardcoded — koi real subscription logic nahi abhi) =====
             Box(
                 modifier = Modifier
                     .background(Color(0xFFE8F0F7), shape = RoundedCornerShape(20.dp))
@@ -125,8 +118,6 @@ fun ProfileScreen(
             }
 
             Spacer(modifier = Modifier.height(24.dp))
-
-            // ===== ACTIVITY OVERVIEW CARD (blue, total resumes) =====
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(containerColor = Color(0xFF005EA4)),
@@ -138,7 +129,11 @@ fun ProfileScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.Top
                     ) {
-                        Text(text = "Activity Overview", fontSize = 13.sp, color = Color(0xFFCFE1F2))
+                        Text(
+                            text = "Activity Overview",
+                            fontSize = 13.sp,
+                            color = Color(0xFFCFE1F2)
+                        )
                         Icon(
                             imageVector = Icons.Filled.Description,
                             contentDescription = null,
@@ -147,7 +142,6 @@ fun ProfileScreen(
                         )
                     }
                     Spacer(modifier = Modifier.height(10.dp))
-                    // resume count 2-digit format mein (e.g. "05") — jaisa image mein hai
                     Text(
                         text = state.totalResumesCreated.toString().padStart(2, '0'),
                         fontSize = 34.sp,
@@ -155,13 +149,15 @@ fun ProfileScreen(
                         color = Color.White
                     )
                     Spacer(modifier = Modifier.height(2.dp))
-                    Text(text = "Total resumes created", fontSize = 12.sp, color = Color(0xFFCFE1F2))
+                    Text(
+                        text = "Total resumes created",
+                        fontSize = 12.sp,
+                        color = Color(0xFFCFE1F2)
+                    )
                 }
             }
 
             Spacer(modifier = Modifier.height(14.dp))
-
-            // ===== 2 SMALL STAT CARDS (Job Matches, Match Rate) =====
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -179,8 +175,6 @@ fun ProfileScreen(
             }
 
             Spacer(modifier = Modifier.height(28.dp))
-
-            // ===== ACCOUNT SETTINGS SECTION =====
             Text(
                 text = "Account Settings",
                 fontSize = 13.sp,
@@ -209,7 +203,7 @@ fun ProfileScreen(
                         icon = Icons.Filled.Lock,
                         label = "Privacy & Security",
                         onClick = { actionEvent(ProfileEvent.PrivacySecurityClicked) },
-                        showDivider = false   // last row mein divider nahi chahiye
+                        showDivider = false
                     )
                 }
             }
@@ -220,8 +214,6 @@ fun ProfileScreen(
                 Text(text = error, color = Color.Red, fontSize = 14.sp)
                 Spacer(modifier = Modifier.height(12.dp))
             }
-
-            // ===== LOGOUT BUTTON (red outline) =====
             OutlinedButton(
                 onClick = { actionEvent(ProfileEvent.LogoutClicked) },
                 modifier = Modifier.fillMaxWidth(),
@@ -242,8 +234,6 @@ fun ProfileScreen(
         }
     }
 }
-
-// Chhota reusable stat card — Job Matches aur Match Rate dono isi ko use karte hain
 @Composable
 private fun StatCard(value: String, label: String, modifier: Modifier = Modifier) {
     Card(
@@ -258,8 +248,6 @@ private fun StatCard(value: String, label: String, modifier: Modifier = Modifier
         }
     }
 }
-
-// Account Settings ki har row (icon + label + chevron) — 3 baar reuse hota hai
 @Composable
 private fun SettingsRow(
     icon: androidx.compose.ui.graphics.vector.ImageVector,
@@ -301,9 +289,6 @@ private fun SettingsRow(
                 tint = Color.Gray
             )
         }
-        // Note: onClick abhi Row pa lagana ho to Modifier.clickable{} add karna hoga —
-        // maine yahan simplicity ke liye onClick parameter rakha hai, use karne ke liye:
-        // .clickable { onClick() } Row ke modifier mein add kar dena jab functionality banani ho
         if (showDivider) {
             androidx.compose.material3.HorizontalDivider(
                 color = Color(0xFFEDEDED),

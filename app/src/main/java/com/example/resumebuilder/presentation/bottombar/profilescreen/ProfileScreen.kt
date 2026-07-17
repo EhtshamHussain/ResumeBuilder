@@ -1,6 +1,11 @@
 package com.example.resumebuilder.presentation.bottombar.profilescreen
 
+import android.content.Context
+import android.print.PrintAttributes
+import android.print.PrintManager
+import android.webkit.WebView
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,15 +28,13 @@ import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseScreen
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewModel
+import com.example.resumebuilder.presentation.shared.presentation.component.circularbar.CircularProgress
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 
@@ -52,22 +56,12 @@ fun ProfileScreen(
     navigation: (NavigationAction) -> Unit = {},
     actionEvent: (ProfileEvent) -> Unit = {},
 ) {
-    LaunchedEffect(Unit) {
-        actionEvent(ProfileEvent.ScreenEntered)
-    }
-
     BaseScreen(
         baseUIEvents = baseUiEvent,
         navigation = navigation
     ) {
         if (state.isLoading) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(color = Color(0xFF005EA4))
-            }
-            return@BaseScreen
+            CircularProgress()
         }
 
         Column(
@@ -255,7 +249,9 @@ private fun SettingsRow(
     onClick: () -> Unit,
     showDivider: Boolean = true
 ) {
-    Column {
+    Column(
+        modifier = Modifier.clickable { onClick() }
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()

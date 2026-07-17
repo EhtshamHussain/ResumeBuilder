@@ -29,14 +29,18 @@ class CreateViewModel(
     }
 
     private fun generateResume() {
-        if (state.resumeTitle.isBlank()) {
+        if (state.resumeTitle.isBlank() ) {
             showError("Please enter a resume title")
             return
-        }
-
-        viewModelScope.launch {
-            state = state.copy(isLoading = true, error = null)
-            state = state.copy(isLoading = false)
+        }else if (state.jobDescription.isBlank()){
+            showError("Please enter a resume title")
+            return
+        } else {
+            viewModelScope.launch {
+                state = state.copy(isLoading = true, error = null)
+                BaseViewModelEvents.ShowToast("Resume Generated feature will come soon")
+                state = state.copy(isLoading = false)
+            }
         }
     }
 }

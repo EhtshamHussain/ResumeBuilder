@@ -10,6 +10,14 @@ fun printWebViewAsPdf(
     webView: WebView,
     jobName: String
 ) {
+    // loadDataWithBaseURL show html and createPrintDocumentAdapter print-ready package for printing or generating pdf
+    /***
+     * A WebView cannot generate a PDF on its own. Android's PrintManager and PdfDocument APIs require a View object,
+    which is only accessible within the UI layer (Composable) and not the ViewModel.
+    Therefore, the actual PDF generation must happen in the UI,
+    with the ViewModel only receiving the result.
+     * [ WebView (Page Load) with loadDataWithBaseURL] ---> [ PrintDocumentAdapter ] ---> [ PrintManager (Android OS) ] ---> [ Save PDF ]*/
+
     val printManager = context.getSystemService(Context.PRINT_SERVICE) as PrintManager
     val printAdapter = webView.createPrintDocumentAdapter(jobName)
     val printAttributes = PrintAttributes.Builder()

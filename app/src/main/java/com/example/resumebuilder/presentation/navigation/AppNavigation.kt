@@ -2,7 +2,6 @@ package com.example.resumebuilder.presentation.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
@@ -153,7 +152,6 @@ fun AppNavigation(
                 navigation = { handleNavigation(it, navController) }
             )
         }
-
         composable<BottomBarScreens.Create> {
             val viewModel = koinViewModel<CreateViewModel>()
             CreateScreen(

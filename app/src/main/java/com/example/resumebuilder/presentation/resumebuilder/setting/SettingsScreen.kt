@@ -35,7 +35,7 @@ fun SettingsScreen(
                 .padding(paddingValues),
             contentAlignment = Alignment.Center
         ) {
-            Text(text = "Settings", fontSize = 24.sp, color = Color.Gray)
+            Text(text = "Coming Soon ..... ", fontSize = 24.sp, color = Color.Gray)
         }
     }
 }

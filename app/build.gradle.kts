@@ -62,10 +62,8 @@ dependencies {
     implementation("io.insert-koin:koin-android:4.2.2")
     // Jetpack Compose ke sath connect karne ke liye
     implementation("io.insert-koin:koin-androidx-compose:4.2.2")
-    //Room
-    //room room
-    val room_version = "2.8.4"
-    implementation("androidx.room:room-runtime:2.8.4")
+     //room
+     implementation("androidx.room:room-runtime:2.8.4")
     ksp("androidx.room:room-compiler:2.8.4")
     //for coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")

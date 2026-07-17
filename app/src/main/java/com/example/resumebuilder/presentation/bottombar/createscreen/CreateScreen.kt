@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.sp
 import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseScreen
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewModel
+import com.example.resumebuilder.presentation.shared.presentation.component.circularbar.CircularProgress
 import com.example.resumebuilder.presentation.shared.presentation.component.labels.LabelText
 import com.example.resumebuilder.screens.CustomButton
 import com.example.resumebuilder.screens.CustomTextField
@@ -73,7 +74,7 @@ fun CreateScreen(
             Spacer(modifier = Modifier.height(32.dp))
 
             if (state.isLoading) {
-                CircularProgressIndicator(color = Color(0xFF005EA4))
+                CircularProgress()
             } else {
                 CustomButton(
                     onClick = { actionEvent(CreateEvent.GenerateClicked) },

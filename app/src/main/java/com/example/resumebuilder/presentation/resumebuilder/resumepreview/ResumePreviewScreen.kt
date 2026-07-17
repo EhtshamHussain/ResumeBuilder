@@ -48,6 +48,7 @@ fun ResumePreviewScreen(
 
     LaunchedEffect(state.renderedHtml) {
         if (state.renderedHtml.isNotBlank()) {
+//            UTF uni code transformation format -8 bit
             webView.loadDataWithBaseURL(null, state.renderedHtml, "text/html", "UTF-8", null)
         }
     }
@@ -83,6 +84,7 @@ fun ResumePreviewScreen(
                             },
                             modifier = Modifier.fillMaxSize()
                         )
+
                     }
                 }
                 state.error?.let { error ->
@@ -106,6 +108,7 @@ fun ResumePreviewScreen(
                         contentColor = Color(0xFF005EA4)
                     )
                     Spacer(modifier = Modifier.width(12.dp))
+
                     CustomButton(
                         onClick = {
                             actionEvent(ResumePreviewEvent.DownloadPdfClicked)

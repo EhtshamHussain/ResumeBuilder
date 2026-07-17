@@ -1,5 +1,6 @@
 package com.example.resumebuilder.presentation.bottombar.profilescreen
 
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -21,12 +22,17 @@ class ProfileViewModel(
     var state by mutableStateOf(ProfileState())
         private set
 
+     init {
+         loadProfile()
+         observeResumeCount()
+     }
+
     fun onEvent(event: ProfileEvent) {
         when (event) {
-            is ProfileEvent.ScreenEntered -> {
-                loadProfile()
-                observeResumeCount()
-            }
+//            is ProfileEvent.ScreenEntered -> {
+//                loadProfile()
+//                observeResumeCount()
+//            }
 
             is ProfileEvent.EditProfileClicked -> {
                 navigate(NavigationAction.NavigateTo(Routes.EditProfile))
@@ -36,13 +42,20 @@ class ProfileViewModel(
                 logout()
             }
 
-            is ProfileEvent.PersonalInformationClicked -> { /* future mein implement hoga */
+            is ProfileEvent.PersonalInformationClicked -> {
+                showToast("Personal Information Will Come Soon In Next Update")
+            /* future mein implement hoga */
             }
 
-            is ProfileEvent.NotificationPreferencesClicked -> { /* future mein implement hoga */
+            is ProfileEvent.NotificationPreferencesClicked -> {
+                showToast("Notification Preferences Will Come Soon In Next Update")
+            /* future mein implement hoga */
             }
 
-            is ProfileEvent.PrivacySecurityClicked -> { /* future mein implement hoga */
+            is ProfileEvent.PrivacySecurityClicked -> {
+                showToast("Privacy & Security Will Come Soon In Next Update")
+
+            /* future mein implement hoga */
             }
         }
     }

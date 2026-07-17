@@ -57,13 +57,7 @@ fun SplashScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(
-                Brush.verticalGradient(
-                    colors = listOf(
-                        Color(0xFF6B8A9E),
-                        Color(0xFF1D4461)
-                    )
-                )
-            ),
+                color = Color.White),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -77,7 +71,7 @@ fun SplashScreen(
                 modifier = Modifier.size(160.dp),
                 shape = CircleShape,
                 colors = CardDefaults.cardColors(
-                    containerColor = Color.White.copy(alpha = 0.2f)
+                    containerColor = Color(0xFFf8f2e6)
                 ),
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = 0.dp
@@ -99,7 +93,7 @@ fun SplashScreen(
             Text(
                 text = "AI Resume Builder",
                 fontSize = 28.sp,
-                color = Color.White,
+                color = Color.Black,
                 fontWeight = FontWeight.Bold
             )
 
@@ -108,7 +102,7 @@ fun SplashScreen(
             Text(
                 text = "PRECISION ENGINEERED CAREERS",
                 fontSize = 12.sp,
-                color = Color.White.copy(alpha = 0.8f),
+                color = Color.Black.copy(alpha = 0.8f),
                 fontWeight = FontWeight.Light,
                 letterSpacing = 2.sp
             )
@@ -120,7 +114,7 @@ fun SplashScreen(
                 .width(180.dp)
                 .padding(bottom = 26.dp),
             thickness = 3.dp,
-            color = Color.White.copy(alpha = 0.4f)
+            color = Color.Black.copy(alpha = 0.4f)
         )
     }
 }

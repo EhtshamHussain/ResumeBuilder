@@ -12,8 +12,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,11 +25,11 @@ import com.example.resumebuilder.presentation.shared.presentation.base.BaseScree
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewModel
 import com.example.resumebuilder.presentation.shared.presentation.component.labels.LabelText
 import com.example.resumebuilder.presentation.shared.presentation.component.divider.OrDivider
-import com.example.resumebuilder.screens.CustomButton
-import com.example.resumebuilder.screens.CustomTextField
+import com.example.resumebuilder.presentation.shared.presentation.component.buttons.CustomButton
+import com.example.resumebuilder.presentation.shared.presentation.component.textfield.CustomTextField
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
-import org.koin.androidx.compose.koinViewModel
+
 @Preview(
     showBackground = true,
     showSystemUi = true
@@ -68,6 +66,7 @@ fun LoginScreen(
             )
             CustomTextField(
                 value = state.email,
+                placeholder = "Enter your email",
                 onValueChange = { actionEvent(LoginEvent.EmailChanged(it)) },
                 trailingIcon = Icons.Default.Email,
                 modifier = Modifier.fillMaxWidth(.9f)
@@ -81,6 +80,7 @@ fun LoginScreen(
             )
             CustomTextField(
                 value = state.password,
+                placeholder = "Enter your password",
                 onValueChange = {actionEvent(LoginEvent.PasswordChanged(it)) },
                 isPassword = true,
                 modifier = Modifier.fillMaxWidth(.9f)

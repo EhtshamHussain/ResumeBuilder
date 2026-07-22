@@ -8,6 +8,7 @@ interface ResumeRepository {
     suspend fun updateResume(resumeId: Long, draft: ResumeDraft): Result<Unit>
     fun getAllResumes(): Flow<List<SavedResume>>
     suspend fun getResumeById(id: Long): Result<SavedResume>
+    suspend fun getResumeByEmail(email: String): Result<SavedResume>
     suspend fun deleteResume(resumeId: Long): Result<Unit>
     suspend fun renderResumeHtml(resumeId: Long): Result<String>
 }

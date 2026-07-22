@@ -7,7 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.example.resumebuilder.data.local.preference.SessionManager
 import com.example.resumebuilder.domain.repository.AuthRepository
-import com.example.resumebuilder.presentation.bottombar.screens.BottomBarScreens
+import com.example.resumebuilder.presentation.bottombar.routes.BottomBarScreens
 import com.example.resumebuilder.presentation.navigation.Routes
 import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewModel
@@ -34,6 +34,7 @@ class LoginViewModel(
             }
 
             is LoginEvent.NavigateToSignup -> {
+
                 navigate(NavigationAction.NavigateTo(Routes.SignUp))
             }
         }

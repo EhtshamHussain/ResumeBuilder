@@ -45,11 +45,11 @@ fun SplashScreen(
     val scale = remember { Animatable(0.8f) }
 
     LaunchedEffect(Unit) {
-        alpha.animateTo(1f, animationSpec = tween(1500))
-        scale.animateTo(1.5f, animationSpec = tween(1500))
-        scale.animateTo(1f, animationSpec = tween(1500))
-        alpha.animateTo(0f, animationSpec = tween(1500))
-        delay(1000.milliseconds)
+//        alpha.animateTo(1f, animationSpec = tween(1500))
+//        scale.animateTo(1.5f, animationSpec = tween(1500))
+//        scale.animateTo(1f, animationSpec = tween(1500))
+//        alpha.animateTo(0f, animationSpec = tween(1500))
+//        delay(1000.milliseconds)
         onNavigate()
     }
 

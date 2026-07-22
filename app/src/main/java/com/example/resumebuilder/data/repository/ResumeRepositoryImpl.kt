@@ -1,6 +1,6 @@
 package com.example.resumebuilder.data.repository
 import android.util.Log
-import com.example.resumebuilder.data.local.dao.ResumeDao
+import com.example.resumebuilder.data.local.db.dao.ResumeDao
 import com.example.resumebuilder.data.mapper.ResumeMapper
 import com.example.resumebuilder.data.mustache.MustacheRenderer
 import com.example.resumebuilder.domain.model.ResumeDraft
@@ -57,6 +57,20 @@ class ResumeRepositoryImpl(
             Result.failure(e)
         }
     }
+
+    override suspend fun getResumeByEmail(email: String): Result<SavedResume> {
+        return try {
+            val entity  = resumeDao.getResumeByEmail(email)
+            if(entity !=null){
+                Result.success(ResumeMapper.entityToDomain(entity))
+            }else{
+                Result.failure(Exception("Resumes not found "))
+            }
+        }catch (e : Exception){
+            Result.failure(e)
+        }
+    }
+
     override suspend fun deleteResume(resumeId: Long): Result<Unit> {
         return try {
             val entity = resumeDao.getResumeById(resumeId)

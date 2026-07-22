@@ -30,8 +30,6 @@ class ResumePreviewViewModel(
             is ResumePreviewEvent.ChangeTemplateClicked -> {
                 loadDraftAndGoToTemplateSelect()
             }
-
-            is ResumePreviewEvent.DownloadPdfClicked -> {}
         }
     }
 

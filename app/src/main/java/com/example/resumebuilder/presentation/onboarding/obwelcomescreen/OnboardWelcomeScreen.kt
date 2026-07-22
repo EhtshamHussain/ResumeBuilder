@@ -1,4 +1,4 @@
-package com.example.resumebuilder.presentation.onboarding
+package com.example.resumebuilder.presentation.onboarding.obwelcomescreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -8,12 +8,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Assignment
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Work
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,15 +22,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.resumebuilder.screens.CustomButton
+import com.example.resumebuilder.presentation.shared.presentation.component.buttons.CustomButton
 import com.example.resumebuilder.presentation.onboarding.components.FeatureCard
 import com.example.resumebuilder.presentation.onboarding.components.FloatingIllustration
 import com.example.resumebuilder.presentation.onboarding.components.OnboardingDescription
 import com.example.resumebuilder.presentation.onboarding.components.OnboardingTitle
-import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
-import com.example.resumebuilder.presentation.shared.presentation.base.BaseScreen
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable

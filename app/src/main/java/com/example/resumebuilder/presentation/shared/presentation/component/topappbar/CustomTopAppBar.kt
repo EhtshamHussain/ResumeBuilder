@@ -29,7 +29,7 @@ fun AppScaffold(
     onNavigationClick: (() -> Unit)? = null,
     actionIcon: ImageVector? = null,
     onActionClick: (() -> Unit)? = null,
-    floatingActionButton: (@Composable () -> Unit)? = null,
+//    floatingActionButton: (@Composable () -> Unit)? = null,
     containerColor: Color = Color.White,
     content: @Composable (PaddingValues) -> Unit
 ) {
@@ -68,6 +68,7 @@ fun AppScaffold(
                         }
                     }
                 },
+
                 actions = {
                     actionIcon?.let {
                         IconButton(
@@ -83,14 +84,16 @@ fun AppScaffold(
                         }
                     }
                 },
+
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.White
+                    containerColor = Color.White,
+
                 )
             )
         },
-        floatingActionButton = {
-            floatingActionButton?.invoke()
-        },
+//        floatingActionButton = {
+//            floatingActionButton?.invoke()
+//        },
         containerColor = containerColor,
         content = content
     )

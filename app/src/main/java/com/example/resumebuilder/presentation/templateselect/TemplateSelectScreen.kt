@@ -17,13 +17,8 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,19 +27,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.resumebuilder.domain.model.ResumeTemplate
 import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseScreen
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewModel
 import com.example.resumebuilder.presentation.shared.presentation.component.circularbar.CircularProgress
 import com.example.resumebuilder.presentation.shared.presentation.component.topappbar.AppScaffold
-import com.example.resumebuilder.screens.CustomButton
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.delay
+import com.example.resumebuilder.presentation.shared.presentation.component.buttons.CustomButton
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
-import org.koin.androidx.compose.koinViewModel
 
 @Preview(showBackground = true)
 @OptIn(ExperimentalMaterial3Api::class)

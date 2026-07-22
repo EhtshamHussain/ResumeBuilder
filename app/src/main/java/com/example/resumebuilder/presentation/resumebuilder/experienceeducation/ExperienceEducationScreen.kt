@@ -39,8 +39,8 @@ import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewM
 import com.example.resumebuilder.presentation.shared.presentation.component.labels.LabelText
 import com.example.resumebuilder.presentation.shared.presentation.component.linearprogressindicator.LinearProgressBar
 import com.example.resumebuilder.presentation.shared.presentation.component.topappbar.AppScaffold
-import com.example.resumebuilder.screens.CustomButton
-import com.example.resumebuilder.screens.CustomTextField
+import com.example.resumebuilder.presentation.shared.presentation.component.buttons.CustomButton
+import com.example.resumebuilder.presentation.shared.presentation.component.textfield.CustomTextField
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 

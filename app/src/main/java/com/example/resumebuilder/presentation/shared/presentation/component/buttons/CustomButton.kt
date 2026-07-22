@@ -1,4 +1,4 @@
-package com.example.resumebuilder.screens
+package com.example.resumebuilder.presentation.shared.presentation.component.buttons
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -32,8 +32,6 @@ fun CustomButton(
     text: String = "",
     icon: ImageVector = Icons.AutoMirrored.Filled.ArrowForward,
     isLogin: Boolean = false,
-    isSignUp: Boolean = false,
-    isSimple: Boolean = false,
     isWithIcon: Boolean = false,
     containerColor: Color = Color.Unspecified,
     contentColor: Color = Color.Unspecified,

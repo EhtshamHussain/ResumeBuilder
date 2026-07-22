@@ -20,10 +20,10 @@ import com.example.resumebuilder.presentation.bottombar.homescreen.HomeScreen
 import com.example.resumebuilder.presentation.bottombar.homescreen.HomeViewModel
 import com.example.resumebuilder.presentation.bottombar.profilescreen.ProfileScreen
 import com.example.resumebuilder.presentation.bottombar.profilescreen.ProfileViewModel
-import com.example.resumebuilder.presentation.bottombar.screens.BottomBarScreens
-import com.example.resumebuilder.presentation.onboarding.OnboardCareerScreen
-import com.example.resumebuilder.presentation.onboarding.OnboardResumeScreen
-import com.example.resumebuilder.presentation.onboarding.OnboardWelcomeScreen
+import com.example.resumebuilder.presentation.bottombar.routes.BottomBarScreens
+import com.example.resumebuilder.presentation.onboarding.obcareerscreen.OnboardCareerScreen
+import com.example.resumebuilder.presentation.onboarding.obresumescreen.OnboardResumeScreen
+import com.example.resumebuilder.presentation.onboarding.obwelcomescreen.OnboardWelcomeScreen
 import com.example.resumebuilder.presentation.resumebuilder.contactsummary.ContactSummaryScreen
 import com.example.resumebuilder.presentation.resumebuilder.contactsummary.ContactSummaryViewModel
 import com.example.resumebuilder.presentation.resumebuilder.experienceeducation.ExperienceEducationScreen
@@ -50,6 +50,7 @@ fun AppNavigation(
     val startDestination = Routes.Splash
     val context = LocalContext.current
     val sessionManager = SessionManager(context)
+
     NavHost(
         modifier = modifier.padding(),
         navController = navController, startDestination = startDestination

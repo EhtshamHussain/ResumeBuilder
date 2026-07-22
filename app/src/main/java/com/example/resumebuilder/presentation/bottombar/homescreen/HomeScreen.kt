@@ -2,6 +2,7 @@ package com.example.resumebuilder.presentation.bottombar.homescreen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,6 +20,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.PermIdentity
+import androidx.compose.material.icons.filled.Person2
+import androidx.compose.material.icons.filled.Person3
+import androidx.compose.material.icons.filled.Person4
+import androidx.compose.material.icons.filled.PersonPin
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
@@ -63,24 +69,24 @@ fun HomeScreen(
         navigation = navigation,
     ) {
         AppScaffold(
-            title = "CareerSync AI",
-            actionIcon = Icons.Default.Settings,
+            title = "Resume Builder",
+            actionIcon = Icons.Default.Person3,
             onActionClick = {
                 actionEvent(HomeEvent.SettingsClicked)
             },
-            floatingActionButton = {
-                FloatingActionButton(
-                    onClick = {
-                        actionEvent(HomeEvent.AddResumeClicked)
-                    },
-                    containerColor = Color(0xFF005EA4)
-                ) {
-                    Icon(
-                        Icons.Default.Add,
-                        contentDescription = null
-                    )
-                }
-            }
+//            floatingActionButton = {
+//                FloatingActionButton(
+//                    onClick = {
+//                        actionEvent(HomeEvent.AddResumeClicked)
+//                    },
+//                    containerColor = Color(0xFF005EA4)
+//                ) {
+//                    Icon(
+//                        Icons.Default.Add,
+//                        contentDescription = null
+//                    )
+//                }
+//            }
         ) { paddingValues ->
             when {
                 state.isLoading -> {
@@ -198,6 +204,7 @@ private fun EmptyResumesContent(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 24.dp),
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.weight(0.3f))
@@ -223,51 +230,14 @@ private fun EmptyResumesContent(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "Tap the + icon to start building your professional profile with AI.",
+            text = "Tap the + icon to start building your professional Resume.",
             fontSize = 16.sp,
             color = Color.Gray,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(horizontal = 20.dp),
             lineHeight = 22.sp
         )
+        Spacer(modifier = Modifier.weight(0.5f))
 
-        Spacer(modifier = Modifier.weight(0.7f))
-
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 100.dp),
-            colors = CardDefaults.cardColors(containerColor = Color(0xFFF9FAFB)),
-            shape = RoundedCornerShape(16.dp),
-            border = BorderStroke(1.dp, Color(0xFFF1F5F9))
-        ) {
-            Row(
-                modifier = Modifier.padding(16.dp),
-                verticalAlignment = Alignment.Top,
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.AutoAwesome,
-                    contentDescription = null,
-                    tint = Color(0xFF005EA4),
-                    modifier = Modifier.size(24.dp)
-                )
-                Column {
-                    Text(
-                        text = "AI Career Tip",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "Uploading your LinkedIn PDF can speed up the generation process by 70%.",
-                        fontSize = 12.sp,
-                        color = Color.Gray,
-                        lineHeight = 18.sp
-                    )
-                }
-            }
-        }
     }
 }

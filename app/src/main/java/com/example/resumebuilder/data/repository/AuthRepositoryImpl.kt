@@ -1,6 +1,6 @@
 package com.example.resumebuilder.data.repository
-import com.example.resumebuilder.data.local.dao.UserDao
-import com.example.resumebuilder.data.local.entity.UserEntity
+import com.example.resumebuilder.data.local.db.dao.UserDao
+import com.example.resumebuilder.data.local.db.entity.UserEntity
 import com.example.resumebuilder.domain.model.User
 import com.example.resumebuilder.domain.repository.AuthRepository
 class AuthRepositoryImpl(

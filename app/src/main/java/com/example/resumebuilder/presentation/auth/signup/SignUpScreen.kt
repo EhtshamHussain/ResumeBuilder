@@ -40,8 +40,8 @@ import com.example.resumebuilder.presentation.shared.presentation.base.BaseScree
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewModel
 import com.example.resumebuilder.presentation.shared.presentation.component.labels.LabelText
 import com.example.resumebuilder.presentation.shared.presentation.component.divider.OrDivider
-import com.example.resumebuilder.screens.CustomButton
-import com.example.resumebuilder.screens.CustomTextField
+import com.example.resumebuilder.presentation.shared.presentation.component.buttons.CustomButton
+import com.example.resumebuilder.presentation.shared.presentation.component.textfield.CustomTextField
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 
@@ -108,6 +108,7 @@ fun SignUpScreen(
             )
             CustomTextField(
                 value = state.name,
+                placeholder = "Enter your full name ",
                 onValueChange = { actionEvent(SignUpEvent.NameChanged(it)) },
                 trailingIcon = Icons.Default.Person,
                 modifier = Modifier.fillMaxWidth(.9f)
@@ -123,6 +124,7 @@ fun SignUpScreen(
             )
             CustomTextField(
                 value = state.email,
+                placeholder = "Enter your email ",
                 onValueChange = { actionEvent(SignUpEvent.EmailChanged(it)) },
                 trailingIcon = Icons.Default.Email,
                 modifier = Modifier.fillMaxWidth(.9f)
@@ -132,12 +134,14 @@ fun SignUpScreen(
 
             LabelText(
                 text = "Password",
+
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 20.dp)
             )
             CustomTextField(
                 value = state.password,
+                placeholder = "Set up strong password",
                 onValueChange = { actionEvent(SignUpEvent.PasswordChanged(it)) },
                 isPassword = true,
                 modifier = Modifier.fillMaxWidth(.9f)

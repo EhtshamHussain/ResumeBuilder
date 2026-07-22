@@ -1,5 +1,6 @@
 package com.example.resumebuilder.presentation.resumebuilder.contactsummary
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,7 +14,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,8 +28,8 @@ import com.example.resumebuilder.presentation.shared.presentation.component.circ
 import com.example.resumebuilder.presentation.shared.presentation.component.labels.LabelText
 import com.example.resumebuilder.presentation.shared.presentation.component.linearprogressindicator.LinearProgressBar
 import com.example.resumebuilder.presentation.shared.presentation.component.topappbar.AppScaffold
-import com.example.resumebuilder.screens.CustomButton
-import com.example.resumebuilder.screens.CustomTextField
+import com.example.resumebuilder.presentation.shared.presentation.component.buttons.CustomButton
+import com.example.resumebuilder.presentation.shared.presentation.component.textfield.CustomTextField
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 

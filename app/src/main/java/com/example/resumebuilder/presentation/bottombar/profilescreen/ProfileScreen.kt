@@ -1,9 +1,5 @@
 package com.example.resumebuilder.presentation.bottombar.profilescreen
 
-import android.content.Context
-import android.print.PrintAttributes
-import android.print.PrintManager
-import android.webkit.WebView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -25,20 +21,24 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -67,228 +67,224 @@ fun ProfileScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(Color(0xFFF8FAFC)) // Soft premium background
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(24.dp))
+            // --- Header with Gradient ---
             Box(
                 modifier = Modifier
-                    .size(88.dp)
-                    .clip(CircleShape)
-                    .background(Color(0xFFE8F0F7)),
-                contentAlignment = Alignment.Center
+                    .fillMaxWidth()
+                    .height(260.dp)
             ) {
-                Icon(
-                    imageVector = Icons.Filled.Person,
-                    contentDescription = "Profile picture placeholder",
-                    tint = Color(0xFF005EA4),
-                    modifier = Modifier.size(48.dp)
-                )
-            }
-
-            Spacer(modifier = Modifier.height(14.dp))
-
-            Text(
-                text = state.name,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = state.email,
-                fontSize = 13.sp,
-                color = Color.Gray
-            )
-
-            Spacer(modifier = Modifier.height(10.dp))
-            Box(
-                modifier = Modifier
-                    .background(Color(0xFFE8F0F7), shape = RoundedCornerShape(20.dp))
-                    .padding(horizontal = 14.dp, vertical = 6.dp)
-            ) {
-                Text(text = "Premium Member", fontSize = 12.sp, color = Color(0xFF005EA4))
-            }
-
-            Spacer(modifier = Modifier.height(24.dp))
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFF005EA4)),
-                shape = RoundedCornerShape(16.dp)
-            ) {
-                Column(modifier = Modifier.padding(20.dp)) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.Top
-                    ) {
-                        Text(
-                            text = "Activity Overview",
-                            fontSize = 13.sp,
-                            color = Color(0xFFCFE1F2)
+                // Blue Gradient Background
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(180.dp)
+                        .background(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(Color(0xFF005EA4), Color(0xFF003D6B))
+                            ),
+                            shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp)
                         )
+                )
+
+                // User Info Overlay
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(horizontal = 20.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .clip(CircleShape)
+                            .background(Color.White)
+                            .padding(4.dp)
+                            .clip(CircleShape)
+                            .background(Color(0xFFE8F0F7)),
+                        contentAlignment = Alignment.Center
+                    ) {
                         Icon(
-                            imageVector = Icons.Filled.Description,
-                            contentDescription = null,
-                            tint = Color(0xFFCFE1F2),
-                            modifier = Modifier.size(28.dp)
+                            imageVector = Icons.Filled.Person,
+                            contentDescription = "Profile Photo",
+                            tint = Color(0xFF005EA4),
+                            modifier = Modifier.size(56.dp)
                         )
                     }
-                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
                     Text(
-                        text = state.totalResumesCreated.toString().padStart(2, '0'),
-                        fontSize = 34.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        text = state.name.ifEmpty { "User Name" },
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                        color = Color(0xFF1E293B)
                     )
-                    Spacer(modifier = Modifier.height(2.dp))
                     Text(
-                        text = "Total resumes created",
-                        fontSize = 12.sp,
-                        color = Color(0xFFCFE1F2)
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(14.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                StatCard(
-                    value = state.jobMatches.toString(),
-                    label = "JOB MATCHES",
-                    modifier = Modifier.weight(1f)
-                )
-                StatCard(
-                    value = "${state.matchRatePercent}%",
-                    label = "MATCH RATE",
-                    modifier = Modifier.weight(1f)
-                )
-            }
-
-            Spacer(modifier = Modifier.height(28.dp))
-            Text(
-                text = "Account Settings",
-                fontSize = 13.sp,
-                color = Color.Gray,
-                modifier = Modifier.fillMaxWidth()
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFFF9FAFB)),
-                shape = RoundedCornerShape(16.dp)
-            ) {
-                Column {
-                    SettingsRow(
-                        icon = Icons.Filled.Person,
-                        label = "Personal Information",
-                        onClick = { actionEvent(ProfileEvent.PersonalInformationClicked) }
-                    )
-                    SettingsRow(
-                        icon = Icons.Filled.Notifications,
-                        label = "Notification Preferences",
-                        onClick = { actionEvent(ProfileEvent.NotificationPreferencesClicked) }
-                    )
-                    SettingsRow(
-                        icon = Icons.Filled.Lock,
-                        label = "Privacy & Security",
-                        onClick = { actionEvent(ProfileEvent.PrivacySecurityClicked) },
-                        showDivider = false
+                        text = state.email.ifEmpty { "email@example.com" },
+                        fontSize = 14.sp,
+                        color = Color(0xFF64748B)
                     )
                 }
             }
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            state.error?.let { error ->
-                Text(text = error, color = Color.Red, fontSize = 14.sp)
+
+            Column(modifier = Modifier.padding(horizontal = 20.dp)) {
+                Text(
+                    text = "Activity Overview",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF1E293B)
+                )
                 Spacer(modifier = Modifier.height(12.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    StatCard(
+                        title = "Resumes",
+                        value = state.totalResumesCreated.toString().padStart(2, '0'),
+                        icon = Icons.Filled.Description,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
             }
-            OutlinedButton(
+
+
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+        
+            TextButton(
                 onClick = { actionEvent(ProfileEvent.LogoutClicked) },
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFFD32F2F)),
-                border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFF3D4D4)),
-                shape = RoundedCornerShape(12.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+                    .height(56.dp),
+                colors = ButtonDefaults.textButtonColors(contentColor = Color(0xFFEF4444)),
+                shape = RoundedCornerShape(16.dp)
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.Logout,
                     contentDescription = null,
-                    modifier = Modifier.size(18.dp)
+                    modifier = Modifier.size(20.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "Logout", fontSize = 15.sp)
+                Text(
+                    text = "Sign Out",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            state.error?.let { error ->
+                Text(
+                    text = error,
+                    color = Color.Red,
+                    fontSize = 14.sp,
+                    modifier = Modifier.padding(20.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(40.dp))
         }
     }
 }
+
 @Composable
-private fun StatCard(value: String, label: String, modifier: Modifier = Modifier) {
+private fun StatCard(
+    title: String,
+    value: String,
+    icon: ImageVector,
+    modifier: Modifier = Modifier
+) {
     Card(
         modifier = modifier,
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFF9FAFB)),
-        shape = RoundedCornerShape(16.dp)
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        shape = RoundedCornerShape(20.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = value, fontSize = 22.sp, fontWeight = FontWeight.Bold, color = Color.Black)
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(text = label, fontSize = 11.sp, color = Color.Gray)
-        }
-    }
-}
-@Composable
-private fun SettingsRow(
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
-    label: String,
-    onClick: () -> Unit,
-    showDivider: Boolean = true
-) {
-    Column(
-        modifier = Modifier.clickable { onClick() }
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 14.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
             Box(
                 modifier = Modifier
                     .size(36.dp)
-                    .clip(CircleShape)
-                    .background(Color(0xFFE8F0F7)),
+                    .background(Color(0xFFE8F0F7), CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
                     tint = Color(0xFF005EA4),
-                    modifier = Modifier.size(18.dp)
+                    modifier = Modifier.size(20.dp)
                 )
             }
-            Spacer(modifier = Modifier.width(14.dp))
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = value,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF1E293B)
+            )
+            Text(
+                text = title,
+                fontSize = 12.sp,
+                color = Color(0xFF64748B)
+            )
+        }
+    }
+}
+
+@Composable
+private fun SettingsItem(
+    icon: ImageVector,
+    label: String,
+    onClick: () -> Unit,
+    showDivider: Boolean = true
+) {
+    Column(modifier = Modifier.clickable { onClick() }) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(40.dp)
+                    .background(Color(0xFFF1F5F9), CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = Color(0xFF475569),
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+            Spacer(modifier = Modifier.width(16.dp))
             Text(
                 text = label,
-                fontSize = 14.sp,
-                color = Color.Black,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Medium,
+                color = Color(0xFF1E293B)
             )
             Icon(
                 imageVector = Icons.Filled.ChevronRight,
                 contentDescription = null,
-                tint = Color.Gray
+                tint = Color(0xFFCBD5E1),
+                modifier = Modifier.size(20.dp)
             )
         }
         if (showDivider) {
-            androidx.compose.material3.HorizontalDivider(
-                color = Color(0xFFEDEDED),
-                modifier = Modifier.padding(start = 66.dp)
+            HorizontalDivider(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                color = Color(0xFFF1F5F9)
             )
         }
     }

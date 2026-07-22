@@ -1,4 +1,4 @@
-package com.example.resumebuilder.presentation.onboarding
+package com.example.resumebuilder.presentation.onboarding.obcareerscreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,7 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.resumebuilder.screens.CustomButton
+import com.example.resumebuilder.presentation.shared.presentation.component.buttons.CustomButton
 import com.example.resumebuilder.presentation.onboarding.components.FeatureCard
 import com.example.resumebuilder.presentation.onboarding.components.FloatingIllustration
 import com.example.resumebuilder.presentation.onboarding.components.OnboardingDescription

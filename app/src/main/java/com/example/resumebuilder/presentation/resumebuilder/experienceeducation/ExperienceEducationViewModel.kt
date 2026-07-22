@@ -1,14 +1,8 @@
 package com.example.resumebuilder.presentation.resumebuilder.experienceeducation
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewModelScope
-import androidx.room.util.TableInfo
 import com.example.resumebuilder.domain.model.Education
 import com.example.resumebuilder.domain.model.WorkExperience
 import com.example.resumebuilder.domain.repository.ResumeDraftRepository
@@ -16,8 +10,6 @@ import com.example.resumebuilder.presentation.navigation.Routes
 import com.example.resumebuilder.presentation.shared.extension.vmScopeMain
 import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewModel
-import com.example.resumebuilder.screens.CustomButton
-import kotlinx.coroutines.launch
 import java.util.UUID
 
 class ExperienceEducationViewModel(

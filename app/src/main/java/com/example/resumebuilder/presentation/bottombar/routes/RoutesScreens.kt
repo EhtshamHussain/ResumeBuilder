@@ -1,4 +1,4 @@
-package com.example.resumebuilder.presentation.bottombar.screens
+package com.example.resumebuilder.presentation.bottombar.routes
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
@@ -29,6 +29,6 @@ data class BottomBarItem(
 
 val bottomBarItems = listOf(
     BottomBarItem(BottomBarScreens.Home, "Home", Icons.Filled.Home),
-    BottomBarItem(BottomBarScreens.Create, "Create", Icons.Filled.AddCircle),
+//    BottomBarItem(BottomBarScreens.Create, "Create", Icons.Filled.AddCircle),
     BottomBarItem(BottomBarScreens.Profile, "Profile", Icons.Filled.Person),
 )

@@ -1,7 +1,5 @@
 package com.example.resumebuilder.presentation.navigation
 
-import com.example.resumebuilder.domain.model.ResumeDraft
-import com.example.resumebuilder.domain.model.User
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -22,10 +20,7 @@ sealed class Routes {
     data object Settings : Routes()
     @Serializable
     data object CreateResume : Routes()
-    @Serializable
-    data object EditProfile : Routes()
-    @Serializable
-    data object ContactSummary : Routes()
+
     @Serializable
     data object ExperienceEducation : Routes()
     @Serializable

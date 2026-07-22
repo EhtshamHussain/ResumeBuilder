@@ -1,6 +1,6 @@
 package com.example.resumebuilder.data.mapper
 
-import com.example.resumebuilder.data.local.entity.ResumeEntity
+import com.example.resumebuilder.data.local.db.entity.ResumeEntity
 import com.example.resumebuilder.domain.model.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -80,7 +80,7 @@ object ResumeMapper {
             selectedTemplateId = entity.selectedTemplateId
         )
         return SavedResume(
-            id = entity.id,
+                id = entity.id,
             resumeName = entity.resumeName,
             draft = draft,
             pdfFilePath = entity.pdfFilePath,

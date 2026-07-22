@@ -1,7 +1,6 @@
 package com.example.resumebuilder.presentation.bottombar.profilescreen
 
 sealed class ProfileEvent {
-    data object EditProfileClicked : ProfileEvent()
     data object LogoutClicked : ProfileEvent()
     data object PersonalInformationClicked : ProfileEvent()
     data object NotificationPreferencesClicked : ProfileEvent()

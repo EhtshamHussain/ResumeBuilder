@@ -3,16 +3,14 @@ package com.example.resumebuilder.presentation.templateselect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.viewModelScope
 import com.example.resumebuilder.domain.model.ResumeTemplate
 import com.example.resumebuilder.domain.repository.ResumeDraftRepository
 import com.example.resumebuilder.domain.repository.ResumeRepository
-import com.example.resumebuilder.presentation.bottombar.screens.BottomBarScreens
+import com.example.resumebuilder.presentation.bottombar.routes.BottomBarScreens
 import com.example.resumebuilder.presentation.navigation.Routes
 import com.example.resumebuilder.presentation.shared.extension.vmScopeMain
 import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
 import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewModel
-import kotlinx.coroutines.launch
 
 class TemplateSelectViewModel(
     private val existingResumeId: Long?,

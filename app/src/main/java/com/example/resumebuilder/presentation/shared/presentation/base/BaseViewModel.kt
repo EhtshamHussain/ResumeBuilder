@@ -22,6 +22,7 @@ abstract class BaseViewModel : ViewModel() {
             _baseUIEvents.emit(BaseViewModelEvents.ShowError(msg))
         }
     }
+
     protected fun showToast(msg: String) {
         vmScopeMain {
             _baseUIEvents.emit(BaseViewModelEvents.ShowToast(msg))

@@ -1,7 +1,7 @@
 package com.example.resumebuilder.di
 
 import androidx.room.Room
-import com.example.resumebuilder.data.local.database.AppDatabase
+import com.example.resumebuilder.data.local.db.database.AppDatabase
 import com.example.resumebuilder.data.local.preference.SessionManager
 import com.example.resumebuilder.data.mustache.MustacheRenderer
 import com.example.resumebuilder.data.repository.AuthRepositoryImpl
@@ -21,13 +21,10 @@ import com.example.resumebuilder.presentation.resumebuilder.polishresume.PolishR
 import com.example.resumebuilder.presentation.resumebuilder.resumepreview.ResumePreviewViewModel
 import com.example.resumebuilder.presentation.resumebuilder.skillsprojects.SkillsProjectsViewModel
 import com.example.resumebuilder.presentation.templateselect.TemplateSelectViewModel
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
-import org.koin.plugin.module.dsl.viewModel
 
 val databaseModule = module {
     single {
@@ -40,7 +37,6 @@ val databaseModule = module {
     }
     single { get<AppDatabase>().userDao() }
     single { get<AppDatabase>().resumeDao() }
-    single { get<AppDatabase>().templateDao() }
     single { SessionManager(get()) }
 }
 val repositoryModule = module {

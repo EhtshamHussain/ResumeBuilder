@@ -70,6 +70,14 @@ class ContactSummaryViewModel(
             showError("Please enter your full name")
             return
         }
+        if (state.professionalTitle.isBlank()) {
+            showError("Please enter your professionalTitle")
+            return
+        }
+        if (state.professionalSummary.isBlank()) {
+            showError("Please enter professional summary")
+            return
+        }
         if (state.email.isBlank()) {
             showError("Please enter your email address")
             return

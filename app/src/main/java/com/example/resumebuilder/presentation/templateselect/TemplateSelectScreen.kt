@@ -45,6 +45,7 @@ fun TemplateSelectScreen(
     baseUiEvent: SharedFlow<BaseViewModel.BaseViewModelEvents> = MutableSharedFlow(),
     navigation: (NavigationAction) -> Unit = {},
     actionEvent: (TemplateSelectEvent) -> Unit = {},
+    isFromBottomBar: Boolean = false
 ) {
     BaseScreen(
         baseUIEvents = baseUiEvent,
@@ -93,7 +94,12 @@ fun TemplateSelectScreen(
                             TemplateCard(
                                 template = template,
                                 onSelectClick = {
-                                    actionEvent(TemplateSelectEvent.TemplateSelected(template))
+                                    if(isFromBottomBar){
+                                        actionEvent(TemplateSelectEvent.TemplateSelectedOnBb(template))
+
+                                    }else {
+                                        actionEvent(TemplateSelectEvent.TemplateSelected(template))
+                                    }
                                 }
                             )
                         }

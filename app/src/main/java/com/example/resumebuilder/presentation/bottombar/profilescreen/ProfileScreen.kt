@@ -21,9 +21,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Description
-import androidx.compose.material.icons.filled.EditNote
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -76,7 +73,7 @@ fun ProfileScreen(
                     .fillMaxWidth()
                     .height(260.dp)
             ) {
-                // Blue Gradient Background
+
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -89,7 +86,7 @@ fun ProfileScreen(
                         )
                 )
 
-                // User Info Overlay
+
                 Column(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
@@ -159,7 +156,7 @@ fun ProfileScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-        
+
             TextButton(
                 onClick = { actionEvent(ProfileEvent.LogoutClicked) },
                 modifier = Modifier

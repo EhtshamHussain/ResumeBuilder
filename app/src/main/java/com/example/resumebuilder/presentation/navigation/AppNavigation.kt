@@ -163,7 +163,7 @@ fun AppNavigation(
             )
         }
 
-        composable<BottomBarScreens.Profile> {
+        composable<Routes.Profile> {
             val viewModel = koinViewModel<ProfileViewModel>()
             ProfileScreen(
                 state = viewModel.state,
@@ -223,6 +223,20 @@ fun AppNavigation(
                 actionEvent = viewModel::onEvent,
                 baseUiEvent = viewModel.baseUIEvents,
                 navigation = { handleNavigation(it, navController) }
+            )
+        }
+
+
+        composable<BottomBarScreens.Template> { backStackEntry ->
+            val route: Routes.TemplateSelect = backStackEntry.toRoute()
+            val viewModel: TemplateSelectViewModel =
+                koinViewModel { parametersOf(route.existingResumeId) }
+            TemplateSelectScreen(
+                state = viewModel.state,
+                actionEvent = viewModel::onEvent,
+                baseUiEvent = viewModel.baseUIEvents,
+                navigation = { handleNavigation(it, navController) },
+                isFromBottomBar = true
             )
         }
         /*** 500kb size of data ( Bundle and Intent Data ) conceptually limited to 1 MB

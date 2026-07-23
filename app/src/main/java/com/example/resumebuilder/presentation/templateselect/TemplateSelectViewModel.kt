@@ -1,7 +1,9 @@
 package com.example.resumebuilder.presentation.templateselect
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.example.resumebuilder.domain.model.ResumeTemplate
 import com.example.resumebuilder.domain.repository.ResumeDraftRepository
@@ -26,6 +28,18 @@ class TemplateSelectViewModel(
             is TemplateSelectEvent.TemplateSelected -> {
                 selectTemplateAndSave(event.template)
             }
+            is TemplateSelectEvent.TemplateSelectedOnBb -> {
+                selectTemplateAndStartGettingData(event.template)
+            }
+        }
+    }
+    private fun selectTemplateAndStartGettingData(template: ResumeTemplate) {
+        vmScopeMain {
+            resumeDraftRepository.updateDraft { it.copy(selectedTemplateId = template.id) }
+            Log.d("TAG", "selectTemplateAndStartGettingData: ${template.id}")
+
+            navigate(NavigationAction.NavigateTo(Routes.CreateResume))
+            Log.d("TAG", "selectTemplateAndStartGettingData: ${resumeDraftRepository.draft.value.selectedTemplateId}")
         }
     }
     private fun selectTemplateAndSave(template: ResumeTemplate) {

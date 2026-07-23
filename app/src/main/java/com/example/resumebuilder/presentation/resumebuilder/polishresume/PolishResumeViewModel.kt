@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.example.resumebuilder.domain.repository.ResumeDraftRepository
+import com.example.resumebuilder.domain.repository.ResumeRepository
 import com.example.resumebuilder.presentation.navigation.Routes
 import com.example.resumebuilder.presentation.shared.extension.vmScopeMain
 import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
@@ -12,7 +13,8 @@ import com.example.resumebuilder.presentation.shared.presentation.base.BaseViewM
 import kotlinx.coroutines.launch
 
 class PolishResumeViewModel(
-    private val resumeDraftRepository: ResumeDraftRepository
+    private val resumeDraftRepository: ResumeDraftRepository,
+    private val resumeRepository: ResumeRepository
 ) : BaseViewModel() {
     var state by mutableStateOf(PolishResumeState())
         private set
@@ -143,11 +145,26 @@ class PolishResumeViewModel(
     private fun finishAndProceed() {
         vmScopeMain {
             saveToRepository()
+            if(resumeDraftRepository.draft.value.selectedTemplateId.isNotEmpty()) {
+                val finalDraft = resumeDraftRepository.draft.value
+                val result = resumeRepository.saveResume(finalDraft)
+                val resumeId = result.getOrNull()
+                resumeId?.let {
+                    navigate(
+                        NavigationAction.NavigateToClearingUpTo(
+                            route = Routes.ResumePreview(resumeId = it),
+                            upToRoute = Routes.CreateResume,
+                            inclusive = false
+                        )
+                    )
+                }
+            }else{
             navigate(
                 NavigationAction.NavigateTo(
                     route = Routes.TemplateSelect(existingResumeId = null)
                 )
             )
         }
+            }
     }
 }

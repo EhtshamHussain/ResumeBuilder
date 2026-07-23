@@ -2,6 +2,7 @@ package com.example.resumebuilder.presentation.bottombar.routes
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.Collections
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -14,7 +15,7 @@ sealed class BottomBarScreens {
     data object Home : BottomBarScreens()
 
     @Serializable
-    data object Profile : BottomBarScreens()
+    data class Template(val existingResumeId: Long? = null) : BottomBarScreens()
 
     @Serializable
     data object Create : BottomBarScreens()
@@ -29,6 +30,5 @@ data class BottomBarItem(
 
 val bottomBarItems = listOf(
     BottomBarItem(BottomBarScreens.Home, "Home", Icons.Filled.Home),
-//    BottomBarItem(BottomBarScreens.Create, "Create", Icons.Filled.AddCircle),
-    BottomBarItem(BottomBarScreens.Profile, "Profile", Icons.Filled.Person),
+    BottomBarItem(BottomBarScreens.Template(null), "Template", Icons.Filled.Collections),
 )

@@ -1,6 +1,7 @@
 package com.example.resumebuilder.domain.model
 
 data class ResumeDraft(
+    val editingResumeId: Long? = null,
     val fullName: String = "",
     val professionalTitle: String = "",
     val email: String = "",

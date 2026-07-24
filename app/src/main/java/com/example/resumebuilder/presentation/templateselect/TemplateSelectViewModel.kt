@@ -49,13 +49,16 @@ class TemplateSelectViewModel(
             resumeDraftRepository.updateDraft { it.copy(selectedTemplateId = template.id) }
             val finalDraft = resumeDraftRepository.draft.value
 
+           val existingId = finalDraft.editingResumeId
 
             val result = if (existingResumeId != null) {
                resumeRepository.updateResume(existingResumeId, finalDraft).map { existingResumeId }
-            } else {
+            } else if(existingId!=null){
+                resumeRepository.updateResume(existingId , finalDraft).map { existingId }
+            }
+            else {
                 resumeRepository.saveResume(finalDraft)
             }
-
             result
                 .onSuccess { savedResumeId ->
                     state = state.copy(isLoading = false, selectedTemplate = template)

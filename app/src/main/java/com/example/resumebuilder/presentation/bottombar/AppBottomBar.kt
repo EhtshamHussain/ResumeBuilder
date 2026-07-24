@@ -1,5 +1,6 @@
 package com.example.resumebuilder.presentation.bottombar
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
@@ -32,6 +33,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -49,14 +51,21 @@ import com.example.resumebuilder.presentation.bottombar.testbotombar.DynamicNotc
 import com.example.resumebuilder.presentation.navigation.Routes
 import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
 import com.example.resumebuilder.presentation.shared.navigation.handleNavigation
+import androidx.compose.runtime.collectAsState
 
+@SuppressLint("RestrictedApi")
 @Composable
 fun AppBottomBar(
-    navController: NavHostController, homeViewModel: HomeViewModel
+    navController: NavHostController,
+//    homeViewModel: HomeViewModel
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination
     val bottomBarShape = remember { DynamicNotchBottomBarShape() }
+    val totalScreens = navController.currentBackStack.collectAsState().value.size
+    LaunchedEffect(Unit) {
+        Log.d("Screens", "AppBottomBar: ${totalScreens}")
+    }
 
     val shouldShowBottomBar = currentRoute?.hierarchy?.any { destination ->
         bottomBarItems.any { item -> destination.hasRoute(item.route::class) }
@@ -66,6 +75,7 @@ fun AppBottomBar(
         enter = EnterTransition.None,
         exit = ExitTransition.None
     ){
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -100,7 +110,10 @@ fun AppBottomBar(
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null
                             ) {
-                                Log.d("TAG", "AppBottomBar: ${currentRoute } routes ${item.route} index ${index} " )
+                                Log.d(
+                                    "TAG",
+                                    "AppBottomBar: ${currentRoute} routes ${item.route} index ${index} "
+                                )
                                 if (!isSelected) {
                                     handleNavigation(
                                         action = NavigationAction.NavigateToTab(item.route),
@@ -150,7 +163,6 @@ fun AppBottomBar(
             FloatingActionButton(
                 onClick = {
                     if (!isCreateSelected) {
-                        homeViewModel.
                         handleNavigation(
                             action = NavigationAction.NavigateTo(Routes.CreateResume),
                             navController = navController

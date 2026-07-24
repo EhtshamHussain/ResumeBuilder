@@ -20,11 +20,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ResumeBuilderTheme {
-                val homeViewModel : HomeViewModel = koinViewModel()
+//                val homeViewModel : HomeViewModel = koinViewModel()
                 val navController = rememberNavController()
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
-                    bottomBar = { AppBottomBar(navController = navController , homeViewModel) },
+                    bottomBar = { AppBottomBar(navController = navController ,
+//                        homeViewModel
+                    )
+                                },
                     containerColor = Color.White,
                     contentColor = Color.Black
                 ) { innerPadding ->

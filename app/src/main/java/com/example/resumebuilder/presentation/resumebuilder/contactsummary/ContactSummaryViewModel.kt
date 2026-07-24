@@ -95,7 +95,7 @@ class ContactSummaryViewModel(
                 )
             }
 
-            navigate(NavigationAction.NavigateTo(Routes.ExperienceEducation))
+            navigate(NavigationAction.NavigateTo(Routes.ExperienceEducation ))
         }
     }
 }

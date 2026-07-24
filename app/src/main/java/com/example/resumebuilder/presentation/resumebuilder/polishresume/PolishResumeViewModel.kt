@@ -1,11 +1,14 @@
 package com.example.resumebuilder.presentation.resumebuilder.polishresume
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
+import com.example.resumebuilder.domain.model.SavedResume
 import com.example.resumebuilder.domain.repository.ResumeDraftRepository
 import com.example.resumebuilder.domain.repository.ResumeRepository
+import com.example.resumebuilder.presentation.bottombar.routes.BottomBarScreens
 import com.example.resumebuilder.presentation.navigation.Routes
 import com.example.resumebuilder.presentation.shared.extension.vmScopeMain
 import com.example.resumebuilder.presentation.shared.navigation.NavigationAction
@@ -145,26 +148,28 @@ class PolishResumeViewModel(
     private fun finishAndProceed() {
         vmScopeMain {
             saveToRepository()
-            if(resumeDraftRepository.draft.value.selectedTemplateId.isNotEmpty()) {
+            if (resumeDraftRepository.draft.value.selectedTemplateId.isNotEmpty()) {
                 val finalDraft = resumeDraftRepository.draft.value
+
                 val result = resumeRepository.saveResume(finalDraft)
                 val resumeId = result.getOrNull()
                 resumeId?.let {
                     navigate(
                         NavigationAction.NavigateToClearingUpTo(
                             route = Routes.ResumePreview(resumeId = it),
-                            upToRoute = Routes.CreateResume,
+                            upToRoute = BottomBarScreens.Home,
                             inclusive = false
                         )
                     )
                 }
-            }else{
-            navigate(
-                NavigationAction.NavigateTo(
-                    route = Routes.TemplateSelect(existingResumeId = null)
+                resumeDraftRepository.clearDraft()
+            } else {
+                navigate(
+                    NavigationAction.NavigateTo(
+                        route = Routes.TemplateSelect(existingResumeId = null)
+                    )
                 )
-            )
-        }
             }
+        }
     }
 }

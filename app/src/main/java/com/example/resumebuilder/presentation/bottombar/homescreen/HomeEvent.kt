@@ -5,6 +5,7 @@ sealed class HomeEvent {
     data object AddResumeClicked : HomeEvent()
     data class ResumeClicked(val resumeId: Long) : HomeEvent()
     data class DeleteIconClicked(val resumeId: Long) : HomeEvent()
+    data class EditResumeClicked(val resumeId: Long) : HomeEvent()
     data object DeleteConfirmed : HomeEvent()
     data object DeleteCancelled : HomeEvent()
 }

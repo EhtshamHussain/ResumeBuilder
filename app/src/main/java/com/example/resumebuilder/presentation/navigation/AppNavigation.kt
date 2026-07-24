@@ -50,10 +50,10 @@ fun AppNavigation(
     val startDestination = Routes.Splash
     val context = LocalContext.current
     val sessionManager = SessionManager(context)
-
     NavHost(
         modifier = modifier.padding(),
-        navController = navController, startDestination = startDestination
+        navController = navController,
+        startDestination = startDestination
     ) {
         composable<Routes.Splash> {
             SplashScreen() {
@@ -248,7 +248,9 @@ fun AppNavigation(
                 state = viewModel.state,
                 actionEvent = viewModel::onEvent,
                 baseUiEvent = viewModel.baseUIEvents,
-                navigation = { handleNavigation(it, navController) }
+                navigation = {
+                    handleNavigation(it, navController)
+                }
             )
         }
         composable<Routes.Settings> {

@@ -12,16 +12,36 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 abstract class BaseViewModel : ViewModel() {
     private val _baseUIEvents = MutableSharedFlow<BaseViewModelEvents>()
     val baseUIEvents = _baseUIEvents.asSharedFlow()
+
+//
+//    private val _sharedState = MutableStateFlow(SharedState())
+//    val sharedState = _sharedState.asStateFlow()
+//
+//    init {
+//        Log.d("BaseViewModel", "the baseViewModel recreated ")
+//    }
+
     protected fun showError(msg: String) {
         vmScopeMain {
             _baseUIEvents.emit(BaseViewModelEvents.ShowError(msg))
         }
     }
+
+//    protected fun updatedSharedState(
+//        block: SharedState.() -> SharedState
+//    ){
+//        Log.d("BaseViewModel", "updatedSharedState: called ")
+//        _sharedState.update { state ->
+//            state.block()
+//        }
+//        Log.d("BaseViewModel", "updatedSharedState: ${_sharedState.value.resumeId}")
+//    }
 
     protected fun showToast(msg: String) {
         vmScopeMain {

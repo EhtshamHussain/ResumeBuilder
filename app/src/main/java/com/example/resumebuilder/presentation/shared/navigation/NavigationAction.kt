@@ -62,5 +62,14 @@ fun handleNavigation(
                 launchSingleTop = true
             }
         }
+
     }
+//    fun NavController.printBackStackCount() {
+//        val backStack = this.currentBackStack.value
+//        println("Total entries in stack: ${backStack.size}")
+//
+//        backStack.forEachIndexed { index, entry ->
+//            println("[Screen ${index + 1}]: ${entry.destination.route}")
+//        }
+//    }
 }

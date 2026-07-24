@@ -19,9 +19,9 @@ class HomeViewModel(
 ) : BaseViewModel() {
     var state by mutableStateOf(HomeState())
         private set
-
     val email = sessionManager.getUserEmail() ?: ""
     private var hasStartedObserving = false
+
     init {
         observeResumes()
     }
@@ -48,9 +48,26 @@ class HomeViewModel(
                 deleteResume()
             }
 
+            is HomeEvent.EditResumeClicked -> {
+                EditResume(resumeId = event.resumeId)
+            }
+
             is HomeEvent.ResumeClicked -> {
                 navigate(NavigationAction.NavigateTo(Routes.ResumePreview(resumeId = event.resumeId)))
             }
+        }
+    }
+
+    fun EditResume(resumeId: Long) {
+        vmScopeMain {
+            // Existing resume ka data Room se fetch karo
+            resumeRepository.getResumeById(resumeId)
+                .onSuccess { savedResume ->
+                    resumeDraftRepository.updateDraft {
+                        savedResume.draft.copy(editingResumeId = resumeId)
+                    }
+                    navigate(NavigationAction.NavigateTo(Routes.CreateResume))
+                }
         }
     }
 
@@ -66,7 +83,7 @@ class HomeViewModel(
 //            isLoading = false,
 //            resumes = listOf(savedResume)
 //        )
-        val resumes  = resumeRepository.getAllResumes()
+        val resumes = resumeRepository.getAllResumes()
             .collect { resumes ->
                 state = state.copy(
                     isLoading = false,
@@ -91,7 +108,6 @@ class HomeViewModel(
                     )
                 }
         }
-
     }
 }
 
